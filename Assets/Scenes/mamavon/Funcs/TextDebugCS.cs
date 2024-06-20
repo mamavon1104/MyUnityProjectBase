@@ -1,19 +1,19 @@
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
-
+#endif
 namespace Mamavon.Funcs.DebugScripts
 {
     /// <summary>
     /// パッケージ選択用の ScriptableObjectだよ。
     /// </summary>
-    [CreateAssetMenu(fileName = "DebugTextObjs", menuName = "Package Manager/Text Debug")]
+    [CreateAssetMenu(fileName = "DebugTextObjs", menuName = "Mamavon Packs/Text Debug")]
     public class TextDebugCS : ScriptableObject
     {
         public TextColor textColor;
         public string text;
     }
-
+#if UNITY_EDITOR
     [CustomEditor(typeof(TextDebugCS))] //typeofってrequireComponentと同じ感じで使えるみたいね
     public class TextDebugEditor : Editor
     {
@@ -31,5 +31,5 @@ namespace Mamavon.Funcs.DebugScripts
             }
         }
     }
-}
 #endif
+}
