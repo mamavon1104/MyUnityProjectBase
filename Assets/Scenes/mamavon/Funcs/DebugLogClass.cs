@@ -24,7 +24,7 @@ namespace Mamavon.Funcs
         }
         private static string GetColorString(TextColor color)
         {
-            return color == TextColor.White ? "#ffffff" : ConvertEnumToColorCode(color);
+            return color == TextColor.White ? "" : $"<color={ConvertEnumToColorCode(color)}>";
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T Debuglog<T>(this T value, TextColor color = TextColor.White)
         {
-            Debug.Log($"Debug : <color={GetColorString(color)}> {typeof(T).Name}: {value} </color>");
+            Debug.Log($"Debug : {GetColorString(color)} {typeof(T).Name}: {value} </color>");
             return value;
         }
 
@@ -43,7 +43,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T Debuglog<T, O>(this T value, O orderClass, TextColor color = TextColor.White) where O : class
         {
-            Debug.Log($"Debug : <color={GetColorString(color)}> {orderClass} ‚Ì {typeof(T).Name}: {value} </color>");
+            Debug.Log($"Debug : {GetColorString(color)} {orderClass} ‚Ì {typeof(T).Name}: {value} </color>");
             return value;
         }
     }
