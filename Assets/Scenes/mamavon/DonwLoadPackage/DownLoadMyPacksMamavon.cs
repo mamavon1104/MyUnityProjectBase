@@ -1,6 +1,7 @@
 using UnityEngine;
 
 #if UNITY_EDITOR
+using Mamavon.Funcs;
 using System.IO;
 using UnityEditor;
 #endif
@@ -10,35 +11,41 @@ namespace Mamavon.DownLoad
     [CreateAssetMenu(menuName = "Mamavon Packs/DownLoad My Packs", fileName = "DownLoadMy.asset")]
     public class DownLoadMyPacksMamavon : ScriptableObject
     {
+#if UNITY_EDITOR
         /// <summary>
         /// アセットのパス
         /// </summary>
-        public string asset_path;
+        public string selectAssetPath;
 
-#if UNITY_EDITOR
         // Method to open a folder panel and set the ASSET_PATH
         public void SetAssetPath()
         {
             string path = EditorUtility.OpenFolderPanel("Select Folder", "", "");
             if (!string.IsNullOrEmpty(path))
             {
-                asset_path = path;
+                selectAssetPath = path;
                 EditorUtility.SetDirty(this);
                 AssetDatabase.SaveAssets();
             }
         }
 
+        public void SetDefaultPath()
+        {
+            selectAssetPath = "C:\\Users\\vanntann\\Desktop\\ProjectBase\\Assets\\Scenes\\mamavon";
+        }
+
         public void DownloadAllFiles(string parentDirectoryPath)
         {
-            if (string.IsNullOrEmpty(asset_path))
+            if (string.IsNullOrEmpty(selectAssetPath))
             {
                 Debug.LogError("アセットパスが空です。ダウンロードできません。");
                 return;
             }
 
             // アセットパスからファイルを取得
-            string[] files = Directory.GetFiles(asset_path);
+            string[] files = Directory.GetDirectories(selectAssetPath);
 
+            string myFilesStr = "";
             // ファイルをコピーして保存
             foreach (string file in files)
             {
@@ -48,11 +55,40 @@ namespace Mamavon.DownLoad
                 // ファイルの保存先パス
                 string destinationPath = Path.Combine(parentDirectoryPath, fileName);
 
-                // ファイルをコピー
-                File.Copy(file, destinationPath, true);
+                myFilesStr = $"\n{destinationPath}\n{file}\n";
+
+                CopyFolder(file, destinationPath);
             }
 
-            Debug.Log("すべてのファイルをダウンロードしました。");
+            AssetDatabase.Refresh();
+            myFilesStr.Debuglog();
+            "ダウンロードが完了しました".Debuglog(TextColor.Yellow);
+        }
+        private void CopyFolder(string sourceFolder, string destinationFolder)
+        {
+            // コピー先のフォルダが存在しない場合は作成する
+            if (!Directory.Exists(destinationFolder))
+            {
+                Directory.CreateDirectory(destinationFolder);
+            }
+
+            // ファイルをコピーする
+            string[] files = Directory.GetFiles(sourceFolder);
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileName(file);
+                string destFile = Path.Combine(destinationFolder, fileName);
+                File.Copy(file, destFile, true);
+            }
+
+            // サブフォルダを再帰的にコピーする
+            string[] subfolders = Directory.GetDirectories(sourceFolder);
+            foreach (string subfolder in subfolders)
+            {
+                string folderName = Path.GetFileName(subfolder);
+                string destFolder = Path.Combine(destinationFolder, folderName);
+                CopyFolder(subfolder, destFolder);
+            }
         }
 #endif
     }
@@ -65,12 +101,11 @@ namespace Mamavon.DownLoad
         {
             DownLoadMyPacksMamavon myScript = (DownLoadMyPacksMamavon)target;
 
-            string assetPath = AssetDatabase.GetAssetPath(myScript);        // Assets/Scenes/mamavon/MyScriptableObjs/DownLoadMy.asset
-            string directory = Path.GetDirectoryName(assetPath);            // Assets/Scenes/mamavon/MyScriptableObjs
+            string thisObjAssetPass = AssetDatabase.GetAssetPath(myScript); // Assets/Scenes/mamavon/MyScriptableObjs/DownLoadMy.asset
+            string directory = Path.GetDirectoryName(thisObjAssetPass);     // Assets/Scenes/mamavon/MyScriptableObjs
             string parentDirectory = Directory.GetParent(directory).Name;   // MyscriptableObjsの親のmamavon.name
             string parentDirectoryPath = Path.Combine(directory, "..");     // Assets/Scenes/mamavon/-MyScriptableObjs-/.. 
                                                                             // ..が表すのは親のためmamavonまでのパスを取得。
-
             base.OnInspectorGUI();
 
             if (parentDirectory == "mamavon")
@@ -81,11 +116,15 @@ namespace Mamavon.DownLoad
             {
                 EditorGUILayout.HelpBox($"親フォルダの名前が「{parentDirectory}」です。\n 「mamavon」に設定しなおしてください。", MessageType.Error);
             }
-
             //このボタン押したら超絶素晴らしいパス選択画面へ移行
             if (GUILayout.Button("パスの設定をする"))
             {
                 myScript.SetAssetPath();
+            }
+
+            if (GUILayout.Button("デフォルトパスに設定する"))
+            {
+                myScript.SetDefaultPath();
             }
 
             if (parentDirectory != "mamavon")
