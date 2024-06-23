@@ -97,39 +97,61 @@ namespace Mamavon.DownLoad
     [CustomEditor(typeof(DownLoadMyPacksMamavon))]
     public class SamplePathScriptableObjectInspector : Editor
     {
+        private DownLoadMyPacksMamavon myScript;
+        private string parentDirectory;
+        private string parentDirectoryPath;
+
+        private void OnEnable()
+        {
+            myScript = (DownLoadMyPacksMamavon)target;
+            UpdatePaths();
+        }
+
+        /// <summary>
+        /// pathを取得する処理。
+        /// </summary>
+        private void UpdatePaths()
+        {
+            string thisObjAssetPath = AssetDatabase.GetAssetPath(myScript); // Assets/Scenes/mamavon/MyScriptableObjs/DownLoadMy.asset
+            string directory = Path.GetDirectoryName(thisObjAssetPath);     // Assets/Scenes/mamavon/MyScriptableObjs
+            parentDirectory = Directory.GetParent(directory).Name;          // MyscriptableObjsの親のmamavon
+            parentDirectoryPath = Path.Combine(directory, "..");            // Assets/Scenes/mamavon/-MyScriptableObjs-/.. 
+        }
+
         public override void OnInspectorGUI()
         {
-            DownLoadMyPacksMamavon myScript = (DownLoadMyPacksMamavon)target;
-
-            string thisObjAssetPass = AssetDatabase.GetAssetPath(myScript); // Assets/Scenes/mamavon/MyScriptableObjs/DownLoadMy.asset
-            string directory = Path.GetDirectoryName(thisObjAssetPass);     // Assets/Scenes/mamavon/MyScriptableObjs
-            string parentDirectory = Directory.GetParent(directory).Name;   // MyscriptableObjsの親のmamavon.name
-            string parentDirectoryPath = Path.Combine(directory, "..");     // Assets/Scenes/mamavon/-MyScriptableObjs-/.. 
-                                                                            // ..が表すのは親のためmamavonまでのパスを取得。
+            // ベースのInspector GUIを描画
             base.OnInspectorGUI();
 
+            // ヘルプボックスを表示
             if (parentDirectory == "mamavon")
             {
                 EditorGUILayout.HelpBox("親フォルダの名前は「mamavon」です。", MessageType.Info);
             }
             else
             {
-                EditorGUILayout.HelpBox($"親フォルダの名前が「{parentDirectory}」です。\n 「mamavon」に設定しなおしてください。", MessageType.Error);
+                EditorGUILayout.HelpBox($"親フォルダの名前が「{parentDirectory}」です。\n「mamavon」に設定しなおしてください。", MessageType.Error);
             }
-            //このボタン押したら超絶素晴らしいパス選択画面へ移行
+
+            // パスの設定ボタン
             if (GUILayout.Button("パスの設定をする"))
             {
                 myScript.SetAssetPath();
+                UpdatePaths(); // パスを更新
             }
 
+            // デフォルトパス設定ボタン
             if (GUILayout.Button("デフォルトパスに設定する"))
             {
                 myScript.SetDefaultPath();
+                UpdatePaths(); // パスを更新
             }
 
+            // 親ディレクトリが「mamavon」でない場合は早期リターン
             if (parentDirectory != "mamavon")
                 return;
 
+            // ダウンロードボタン
             if (GUILayout.Button("mamavonベースから最新版をダウンロード"))
             {
                 myScript.DownloadAllFiles(parentDirectoryPath);

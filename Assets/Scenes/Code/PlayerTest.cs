@@ -1,20 +1,81 @@
 using Mamavon.Funcs;
+using System;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerTest : MonoBehaviour
 {
-    [SerializeField] float _speed;
-    [SerializeField] private Transform cameraTrans;
-    private Rigidbody rig;
+    [SerializeField] float m_speed = 10f;
+    [SerializeField] private float m_jumpForce = 10f; // ジャンプの力
+    [SerializeField] private Transform m_cameraTrans = default;
+    [SerializeField] private SphereColliderClass m_collider;
+
+    private Transform _myT;
+    private Rigidbody _rig;
+    private Vector2 _move;
+    private Vector3 _myMoveVec;
+    private RaycastHit _hit;
+
     private void Start()
     {
-        rig = GetComponent<Rigidbody>();
+        _myT = transform;
+        _rig = GetComponent<Rigidbody>();
+        // ジャンプ処理
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Where(_ => Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            .ThrottleFirst(TimeSpan.FromMilliseconds(10))
+            .Subscribe(_ =>
+            {
+                _rig.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+            });
+    }
+
+    private void FixedUpdate()
+    {
+        _move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _myMoveVec = m_cameraTrans.CalculateMovementDirection(_move) * m_speed;
     }
     private void Update()
     {
-        var move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        rig.AddForce(cameraTrans.CalculateMovementDirection(move) * _speed);
+        _rig.velocity = new Vector3(_myMoveVec.x, _rig.velocity.y, _myMoveVec.z);
     }
+
+    // 地面に接しているかどうかをチェックするメソッド
+    private bool IsGrounded()
+    {
+        return _myT.CheckGroundSphere(m_collider, out _hit, true).Debuglog(TextColor.Green);
+    }
+
+    //#if UNITY_EDITOR
+    //    [SerializeField] bool isEnable = false;
+
+    //    void OnDrawGizmos()
+    //    {
+    //        if (m_collider.isDraw == false)
+    //            return;
+
+    //        var isHit = Physics.SphereCast(
+    //                _myT.position,
+    //                m_collider.radius - SphereColliderClass.RADIUS_TOLERANCE,
+    //                Vector3.down,
+    //                out _hit,
+    //                m_collider.length,
+    //                m_collider.groundLayer
+    //            );
+
+    //        Gizmos.color = isHit ? Color.green : Color.red;
+    //        if (isHit)
+    //        {
+    //            Gizmos.DrawRay(_myT.position, Vector3.down * _hit.distance);
+    //            Gizmos.DrawWireSphere(_myT.position + Vector3.down * (_hit.distance), m_collider.radius);
+    //        }
+    //        else
+    //        {
+    //            Gizmos.DrawRay(_myT.position, Vector3.down * m_collider.length);
+    //        }
+    //    }
+    //#endif
 }
