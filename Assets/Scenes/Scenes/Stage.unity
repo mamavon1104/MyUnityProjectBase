@@ -820,6 +820,10 @@ MonoBehaviour:
   m_jumpForce: 10
   m_cameraTrans: {fileID: 805554164}
   m_collider: {fileID: 11400000, guid: 4197f19868c80c842a516278e6c6fa0f, type: 2}
+  _myT: {fileID: 0}
+  _rig: {fileID: 0}
+  _move: {x: 0, y: 0}
+  _myMoveVec: {x: 0, y: 0, z: 0}
 --- !u!54 &1797452809
 Rigidbody:
   m_ObjectHideFlags: 0

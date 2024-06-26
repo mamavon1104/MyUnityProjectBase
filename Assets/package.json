@@ -1,0 +1,14 @@
+{
+    "name": "com.mamavon.myunityprojectbase",
+    "version": "1.0.0",
+    "displayName": "My Unity Project Base",
+    "description": "Description of your package",
+    "unity": "2019.1",
+    "dependencies": {
+    },
+    "keywords": [
+    ],
+    "author": {
+      "name": "Hattori"
+    }
+  }
