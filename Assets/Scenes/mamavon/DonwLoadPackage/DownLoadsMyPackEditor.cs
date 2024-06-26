@@ -33,7 +33,7 @@ namespace Mamavon.DownLoad
         }
         private void DownLoadMyPacks()
         {
-            const string MY_PACKS_NAME = "https://github.com/mamavon1104/MyUnityProjectBase.git";
+            const string MY_PACKS_NAME = "https://github.com/mamavon1104/MyUnityProjectBase.git?path=Assets";
 
             AddRequest addRequest = Client.Add(MY_PACKS_NAME);
 
