@@ -47,6 +47,7 @@ namespace Mamavon.DownLoad
                 else if (addRequest.Status >= StatusCode.Failure)
                     Debug.LogError("インストールに失敗しました: " + addRequest.Error.message);
             }
+            AssetDatabase.Refresh();
         }
     }
 }
