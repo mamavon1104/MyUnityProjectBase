@@ -73,4 +73,3 @@ crashlytics-build.properties
 # 以下追加するポイントです.
 /Assets/Scenes/mamavon/FirstPacksDownload/
 /Assets/Download
-*.meta

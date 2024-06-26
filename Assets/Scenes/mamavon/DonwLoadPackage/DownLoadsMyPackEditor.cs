@@ -36,9 +36,7 @@ namespace Mamavon.DownLoad
             const string MY_PACKS_NAME = "https://github.com/mamavon1104/MyUnityProjectBase.git?path=Assets"; //Publicリポジトリにしなきゃいけない。
             AddRequest addRequest = Client.Add(MY_PACKS_NAME);
             Debug.Log($"{MY_PACKS_NAME}をインストールしま～す");
-
             EditorApplication.update += Progress;
-
             void Progress()
             {
                 if (addRequest.IsCompleted)
@@ -47,7 +45,6 @@ namespace Mamavon.DownLoad
                         Debug.Log("インストールが完了しました: " + addRequest.Result.packageId);
                     else if (addRequest.Status >= StatusCode.Failure)
                         Debug.LogError("インストールに失敗しました: " + addRequest.Error.message);
-
                     EditorApplication.update -= Progress;
                     AssetDatabase.Refresh();
                 }

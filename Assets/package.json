@@ -1,14 +1,18 @@
 {
-    "name": "com.mamavon.myunityprojectbase",
-    "version": "1.0.0",
-    "displayName": "My Unity Project Base",
-    "description": "Description of your package",
-    "unity": "2019.1",
-    "dependencies": {
-    },
-    "keywords": [
-    ],
-    "author": {
-      "name": "Hattori"
-    }
+  "name": "com.mamavon.myunityprojectbase",
+  "version": "1.0.0",
+  "displayName": "My Unity Project Base",
+  "description": "Description of your package",
+  "unity": "2019.1",
+  "dependencies": {
+  },
+  "keywords": [
+    "keyword1",
+    "keyword2"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://your-website.com"
   }
+}
