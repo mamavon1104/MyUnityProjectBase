@@ -1,17 +1,13 @@
-using UnityEngine;
-
-#if UNITY_EDITOR
 using Mamavon.Funcs;
 using System.IO;
 using UnityEditor;
-#endif
+using UnityEngine;
 
 namespace Mamavon.DownLoad
 {
     [CreateAssetMenu(menuName = "Mamavon Packs/DownLoad My Packs", fileName = "DownLoadMy.asset")]
     public class DownLoadMyPacksMamavon : ScriptableObject
     {
-#if UNITY_EDITOR
         /// <summary>
         /// アセットのパス
         /// </summary>
@@ -90,10 +86,8 @@ namespace Mamavon.DownLoad
                 CopyFolder(subfolder, destFolder);
             }
         }
-#endif
     }
 
-#if UNITY_EDITOR
     [CustomEditor(typeof(DownLoadMyPacksMamavon))]
     public class SamplePathScriptableObjectInspector : Editor
     {
@@ -158,5 +152,4 @@ namespace Mamavon.DownLoad
             }
         }
     }
-#endif
 }
