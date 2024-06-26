@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.mamavon.myunityprojectbase": "https://github.com/mamavon1104/MyUnityProjectBase.git?path=Assets",
     "com.neuecc.unirx": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.development": "1.0.1",

@@ -33,7 +33,7 @@ namespace Mamavon.DownLoad
         }
         private void DownLoadMyPacks()
         {
-            const string MY_PACKS_NAME = "https://github.com/mamavon1104/MyUnityProjectBase.git?path=Assets"; //Publicリポジトリにしなきゃいけない。
+            const string MY_PACKS_NAME = "C:\\Users\\vanntann\\Desktop\\ProjectBase\\Assets\\Scenes\\mamavon"; //Publicリポジトリにしなきゃいけない。
             AddRequest addRequest = Client.Add(MY_PACKS_NAME);
             Debug.Log($"{MY_PACKS_NAME}をインストールしま～す");
             EditorApplication.update += Progress;

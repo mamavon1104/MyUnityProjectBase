@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.mamavon.myunityprojectbase": {
+      "version": "https://github.com/mamavon1104/MyUnityProjectBase.git?path=Assets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "256fa123f6ea07f4cd75f03022315cdb6754b9f8"
+    },
     "com.neuecc.unirx": {
       "version": "https://github.com/neuecc/UniRx.git?path=Assets/Plugins/UniRx/Scripts",
       "depth": 0,

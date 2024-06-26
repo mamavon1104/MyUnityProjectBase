@@ -38,12 +38,22 @@ namespace Mamavon.Funcs
         }
 
         /// <summary>
-        /// Debug.Logを行います。
-        /// 引数ありの場合はクラス名を表示します。
+        /// Debug.LogWarningを行います。
+        /// 引数なしの場合はクラス名を表示しません。
         /// </summary>
-        public static T Debuglog<T, O>(this T value, O orderClass, TextColor color = TextColor.White) where O : class
+        public static T DebuglogWarning<T>(this T value, TextColor color = TextColor.Yellow)
         {
-            Debug.Log($"{GetColorString(color)} {orderClass} の {typeof(T).Name}: {value} </color>");
+            Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            return value;
+        }
+
+        /// <summary>
+        /// Debug.LogErrorを行います。
+        /// 引数なしの場合はクラス名を表示しません。
+        /// </summary>
+        public static T DebuglogError<T>(this T value, TextColor color = TextColor.Red)
+        {
+            Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
             return value;
         }
     }
