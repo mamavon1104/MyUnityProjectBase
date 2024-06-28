@@ -813,17 +813,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1797452807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b2fc7da34820f40b0e82d097dca7cf, type: 3}
+  m_Script: {fileID: 11500000, guid: 403d7c665b940ea43b8bb6b5168526cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 10
   m_jumpForce: 10
   m_cameraTrans: {fileID: 805554164}
-  m_collider: {fileID: 11400000, guid: 4197f19868c80c842a516278e6c6fa0f, type: 2}
-  _myT: {fileID: 0}
-  _rig: {fileID: 0}
-  _move: {x: 0, y: 0}
-  _myMoveVec: {x: 0, y: 0, z: 0}
+  m_collider: {fileID: 11400000, guid: 63c8a57c069a44d48af2a2763407dbc9, type: 2}
 --- !u!54 &1797452809
 Rigidbody:
   m_ObjectHideFlags: 0
