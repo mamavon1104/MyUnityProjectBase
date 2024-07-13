@@ -4,12 +4,8 @@
 //using UnityEditor.PackageManager.Requests;
 //using UnityEngine;
 
-//namespace Mamavon.DownLoad
+//namespace Mamavon.Download
 //{
-//    /// <summary>
-//    /// パッケージ選択用の ScriptableObjectだよ。
-//    /// </summary>
-
 //    public class DownLoadsMyPackEditor : EditorWindow
 //    {
 //        [MenuItem("Mamavon/MyPacksDownload")]

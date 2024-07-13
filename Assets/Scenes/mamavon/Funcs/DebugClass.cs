@@ -16,6 +16,20 @@ namespace Mamavon.Funcs
     internal static class DebugClass
     {
         /// <summary>
+        /// TextColorに合った色を返します。
+        /// </summary>
+        /// <param name="color">TextColor</param>
+        /// <returns>Color型の色を返す</returns>
+        public static Color ConvertEnumToColor(TextColor color)
+        {
+            string colorCode = ConvertEnumToColorCode(color);
+            if (ColorUtility.TryParseHtmlString(colorCode, out Color parsedColor))
+            {
+                return parsedColor.Debuglog();
+            }
+            return Color.white; // デフォルトの色として白を返す
+        }
+        /// <summary>
         /// Enumの名前を小文字に変換して色として使用
         /// </summary>
         private static string ConvertEnumToColorCode(TextColor color)

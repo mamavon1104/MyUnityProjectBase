@@ -7,7 +7,7 @@ namespace Mamavon.Funcs.Scriptables
     /// <summary>
     /// パッケージ選択用の ScriptableObjectだよ。
     /// </summary>
-    [CreateAssetMenu(fileName = "DebugVectorObjs", menuName = "Mamavon Packs/Debug ScripObjs/Vector Debug")]
+    [CreateAssetMenu(fileName = "DebugVectorObjs", menuName = "Mamavon Packs/ScriptableObject/Debug ScripObjs/Vector Debug")]
     public class VectorScripObjs : ScriptableObject
     {
         public Vector3 vector3_A, vector3_B;

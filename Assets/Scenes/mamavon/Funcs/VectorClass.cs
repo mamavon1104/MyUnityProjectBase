@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mamavon
+namespace Mamavon.Funcs
 {
     internal static class VectorClass
     {

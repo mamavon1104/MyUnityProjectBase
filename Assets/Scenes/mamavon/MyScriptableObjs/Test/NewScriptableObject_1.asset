@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01775aadc5e3ba04db380b4db9f61ea4, type: 3}
-  m_Name: DebugVectorObjs
+  m_Script: {fileID: 11500000, guid: 6166f0aa9dd3a174ea20154f54ad0db0, type: 3}
+  m_Name: NewScriptableObject_1
   m_EditorClassIdentifier: 
-  vector3_A: {x: 0, y: 0, z: 0}
-  vector3_B: {x: 0, y: 0, z: 0}
-  vector2_A: {x: 0, y: 0}
-  vector2_B: {x: 0, y: 0}
+  textColor: 0
+  text: 

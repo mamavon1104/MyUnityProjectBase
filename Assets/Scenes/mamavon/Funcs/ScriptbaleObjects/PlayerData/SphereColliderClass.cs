@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Mamavon.Funcs
 {
 
-    [CreateAssetMenu(fileName = "SphereColliderScriptsObjs", menuName = "Mamavon Packs/Object Scripts/Sphere Collider ScriptObjs")]
+    [CreateAssetMenu(fileName = "SphereColliderScriptsObjs", menuName = "Mamavon Packs/ScriptableObject/Object Scripts/Sphere Collider ScriptObjs")]
     public class SphereColliderClass : ScriptableObject
     {
         [Header("SphereCollider‚Ì”¼Œa")] public float radius = 0.5f;

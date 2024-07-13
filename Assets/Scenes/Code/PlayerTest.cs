@@ -48,34 +48,4 @@ public class PlayerTest : MonoBehaviour
     {
         return _myT.CheckGroundSphere(m_collider, out _hit, true).Debuglog(TextColor.Green);
     }
-
-    //#if UNITY_EDITOR
-    //    [SerializeField] bool isEnable = false;
-
-    //    void OnDrawGizmos()
-    //    {
-    //        if (m_collider.isDraw == false)
-    //            return;
-
-    //        var isHit = Physics.SphereCast(
-    //                _myT.position,
-    //                m_collider.radius - SphereColliderClass.RADIUS_TOLERANCE,
-    //                Vector3.down,
-    //                out _hit,
-    //                m_collider.length,
-    //                m_collider.groundLayer
-    //            );
-
-    //        Gizmos.color = isHit ? Color.green : Color.red;
-    //        if (isHit)
-    //        {
-    //            Gizmos.DrawRay(_myT.position, Vector3.down * _hit.distance);
-    //            Gizmos.DrawWireSphere(_myT.position + Vector3.down * (_hit.distance), m_collider.radius);
-    //        }
-    //        else
-    //        {
-    //            Gizmos.DrawRay(_myT.position, Vector3.down * m_collider.length);
-    //        }
-    //    }
-    //#endif
 }
