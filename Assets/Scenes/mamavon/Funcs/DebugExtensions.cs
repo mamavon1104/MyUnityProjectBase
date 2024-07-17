@@ -13,7 +13,7 @@ namespace Mamavon.Funcs
         Magenta,
         Cyan,
     }
-    internal static class DebugClass
+    internal static class DebugExtensions
     {
         /// <summary>
         /// TextColor‚É‡‚Á‚½F‚ğ•Ô‚µ‚Ü‚·B
