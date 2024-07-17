@@ -1,7 +1,3 @@
-using System.IO;
-using UnityEditor;
-using UnityEngine;
-
 namespace Mamavon.MyEditor
 {
     public class ScripObjCSGeneratorWindow : EditorWindow
@@ -60,14 +56,27 @@ using UnityEngine;
 /// <summary>
 /// ScriptableObjectだよ。
 /// </summary>
-[CreateAssetMenu(fileName = ""{0}"", menuName = ""Mamavon Packs/ScriptableObject/{0}"")]
-public class {0} : ScriptableObject
+[CreateAssetMenu(fileName = ""CardGameTotalCost"", menuName = ""Mamavon Packs/ScriptableObject/CardGameTotalCost"")]
+public class CardGameTotalCost : ScriptableObject
 {{
-    public int test;
-    public ReactiveProperty<int> a;
-
-    public void Test()
+    public ReactiveProperty<int> testReactiveProperty;
+    
+    [SerializeField] int test;
+    public int Test
     {{
+        get {{ return test; }}
+    }}
+
+
+    public void TestFunc(int i)
+    {{
+
+    }}
+
+    [ContextMenu(""実行テスト"")]
+    private void TestFunc()
+    {{
+
     }}
 }}";
 
