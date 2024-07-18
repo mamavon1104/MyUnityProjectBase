@@ -19,7 +19,7 @@ namespace Mamavon.DownLoad
         public void ResetPackages() => selectedPacks = UnityPackages.None;
 
 
-        [MenuItem("Mamavon/DownLoadPacksWindow")]
+        [MenuItem("Mamavon/My Editors/DownLoadPacksWindow")]
         public static void ShowWindow()
         {
             GetWindow(typeof(PackageSelectionEditorWindow));

@@ -1,3 +1,8 @@
+#if UNITY_EDITOR
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
 namespace Mamavon.MyEditor
 {
     public class ScripObjCSGeneratorWindow : EditorWindow
@@ -5,7 +10,7 @@ namespace Mamavon.MyEditor
         private string className = "NewScriptableObject";
         private string folderPath = "Assets/ScriptableObjects";
 
-        [MenuItem("Mamavon/ScriptableObjC#")]
+        [MenuItem("Mamavon/My Editors/ScriptableObjC#")]
         public static void ShowWindow()
         {
             GetWindow<ScripObjCSGeneratorWindow>("ScripObj CS Generator");
@@ -92,3 +97,4 @@ public class CardGameTotalCost : ScriptableObject
         }
     }
 }
+#endif

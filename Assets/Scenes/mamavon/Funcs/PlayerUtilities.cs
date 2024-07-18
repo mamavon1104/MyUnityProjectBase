@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Mamavon.Funcs
 {
-    //Player Utilities　プレイヤーが簡単に動けるように基礎的な動作を
+    //Player Utilities　プレイヤーが簡単に動けるように基礎的な動作を纏め上げますよー
 
     public static class PlayerCheckGroundClass
     {
@@ -49,6 +49,27 @@ namespace Mamavon.Funcs
             return (Quaternion.AngleAxis(cameraTransform.eulerAngles.y, Vector3.up) //カメラの回転
                     * new Vector3(inputVector.x, 0, inputVector.y))                //playerのvector
                     .normalized;                                                    //正規化する
+        }
+    }
+    internal static class TransformExtention
+    {
+        public static void Reset(this Transform transform)
+        {
+            transform.position = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+        }
+        public static void SetPosX(this Transform transform, float x)
+        {
+            transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        }
+        public static void SetPosY(this Transform transform, float y)
+        {
+            transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        }
+        public static void SetPosZ(this Transform transform, float z)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, z);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Mamavon.MyEditor
         private string objectName = "NewScriptableObject";
         private string folderPath = "Assets/ScriptableObjects";
 
-        [MenuItem("Mamavon/Generate ScriptableObjs")]
+        [MenuItem("Mamavon/My Editors/Generate ScriptableObjs")]
         public static void ShowWindow()                     //ここで表示させるという事もできるんだね
         {
             GetWindow<ScriptableObjectGenerator>("ScriptableObject生成ツール"); //タイトルみたいな事

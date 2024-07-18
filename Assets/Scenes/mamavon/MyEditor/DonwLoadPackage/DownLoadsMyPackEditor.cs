@@ -8,7 +8,7 @@
 //{
 //    public class DownLoadsMyPackEditor : EditorWindow
 //    {
-//        [MenuItem("Mamavon/MyPacksDownload")]
+//        [MenuItem("Mamavon/My Editors/MyPacksDownload")]
 //        public static void ShowWindow()
 //        {
 //            GetWindow(typeof(DownLoadsMyPackEditor));

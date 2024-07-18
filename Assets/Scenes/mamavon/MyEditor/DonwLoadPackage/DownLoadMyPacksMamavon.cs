@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using Mamavon.Funcs;
 using System.IO;
 using UnityEditor;
@@ -153,3 +154,4 @@ namespace Mamavon.DownLoad
         }
     }
 }
+#endif
