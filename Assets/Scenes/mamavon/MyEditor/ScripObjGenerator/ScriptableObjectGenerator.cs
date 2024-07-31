@@ -1,13 +1,14 @@
-#if UNITY_EDITOR
+ï»¿#if UNITY_EDITOR
+using Mamavon.Funcs;
 using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 namespace Mamavon.MyEditor
 {
-    public class ScriptableObjectGenerator : EditorWindow   //‚±‚±‚ÉEditor‚ğŒp³‚µ‚Ä
+    public class ScriptableObjectGenerator : EditorWindow   //ã“ã“ã«Editorã‚’ç¶™æ‰¿ã—ã¦
     {
-        //‚±‚ê‚ğ‚·‚é‚±‚Æ‚ÅC#‚ğİ’è‚Å‚«‚é‚ç‚µ‚¢
+        //ã“ã‚Œã‚’ã™ã‚‹ã“ã¨ã§C#ã‚’è¨­å®šã§ãã‚‹ã‚‰ã—ã„
         private MonoScript selectedScript;
 
         private int numberOfObjects = 10;
@@ -15,53 +16,50 @@ namespace Mamavon.MyEditor
         private string folderPath = "Assets/ScriptableObjects";
 
         [MenuItem("Mamavon/My Editors/Generate ScriptableObjs")]
-        public static void ShowWindow()                     //‚±‚±‚Å•\¦‚³‚¹‚é‚Æ‚¢‚¤–‚à‚Å‚«‚é‚ñ‚¾‚Ë
+        public static void ShowWindow()                     //ã“ã“ã§è¡¨ç¤ºã•ã›ã‚‹ã¨ã„ã†äº‹ã‚‚ã§ãã‚‹ã‚“ã ã­
         {
-            GetWindow<ScriptableObjectGenerator>("ScriptableObject¶¬ƒc[ƒ‹"); //ƒ^ƒCƒgƒ‹‚İ‚½‚¢‚È–
+            GetWindow<ScriptableObjectGenerator>("ScriptableObjectç”Ÿæˆãƒ„ãƒ¼ãƒ«"); //ã‚¿ã‚¤ãƒˆãƒ«ã¿ãŸã„ãªäº‹
         }
 
-        private void OnGUI()                                //‚±‚±‚©‚ç‰º‚ªUI•\¦
+        private void OnGUI()                                //ã“ã“ã‹ã‚‰ä¸‹ãŒUIè¡¨ç¤º
         {
-            GUILayout.Label("ScriptableObject¶¬‚­‚ñ", EditorStyles.boldLabel);
+            GUILayout.Label("ScriptableObjectç”Ÿæˆãã‚“", EditorStyles.boldLabel);
 
-            numberOfObjects = EditorGUILayout.IntField("¶¬‚·‚éƒIƒuƒWƒFƒNƒg”", numberOfObjects);
-            objectName = EditorGUILayout.TextField("Šî–{ƒIƒuƒWƒFƒNƒg–¼", objectName);
+            numberOfObjects = EditorGUILayout.IntField("ç”Ÿæˆã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ•°", numberOfObjects);
+            objectName = EditorGUILayout.TextField("åŸºæœ¬ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå", objectName);
 
-            #region ‰¡•À‚ÑŠJn
+            #region æ¨ªä¸¦ã³é–‹å§‹
             EditorGUILayout.BeginHorizontal();
-            folderPath = EditorGUILayout.TextField("•Û‘¶ƒtƒHƒ‹ƒ_ƒpƒX", folderPath);
-            if (GUILayout.Button("ƒtƒHƒ‹ƒ_‘I‘ğ", GUILayout.Width(100)))
+            folderPath = EditorGUILayout.TextField("ä¿å­˜ãƒ•ã‚©ãƒ«ãƒ€ãƒ‘ã‚¹", folderPath);
+            if (GUILayout.Button("ãƒ•ã‚©ãƒ«ãƒ€é¸æŠ", GUILayout.Width(100)))
             {
-                string initialPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this)));
-                string selectedPath = EditorUtility.OpenFolderPanel("•Û‘¶ƒtƒHƒ‹ƒ_‚ğ‘I‘ğ", initialPath, "");
-                if (!string.IsNullOrEmpty(selectedPath))
-                {
-                    folderPath = FileUtil.GetProjectRelativePath(selectedPath);
-                }
+                folderPath = EditorExtension.OpenFolderPanel();
             }
             EditorGUILayout.EndHorizontal();
             #endregion
 
             /*
-              UnityEngine.Object obj(selectedScript) ¨ 
-                V‚µ‚¢’l‚ª‘I‘ğ‚³‚ê‚é‚Ü‚ÅA‚±‚ÌƒIƒuƒWƒFƒNƒg‚ªƒtƒB[ƒ‹ƒh‚É•\¦‚³‚ê‚é‚Á‚Ä‚Î‚æB
+              string test = Path.GetDirectoryName(AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(this))); ã“ã‚Œã§this(ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¾ã§ã®å ´æ‰€)ãŒå–ã‚Œã‚‹ã€‚
+            
+              UnityEngine.Object obj(selectedScript) â†’ 
+                æ–°ã—ã„å€¤ãŒé¸æŠã•ã‚Œã‚‹ã¾ã§ã€ã“ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«è¡¨ç¤ºã•ã‚Œã‚‹ã£ã¦ã°ã‚ˆã€‚
 
-              System.Type objType(typeof(MonoScript))@¨
-            @  ƒtƒB[ƒ‹ƒh‚Å‹–‰Â‚³‚ê‚éƒIƒuƒWƒFƒNƒg‚ÌŒ^A‚±‚ÌŒ^A‚Ü‚½‚ÍŒp³‚ÌƒIƒuƒWƒFƒNƒg‚Ì‚İ‚ªƒtƒB[ƒ‹ƒh‚É‚¢‚ê‚ç‚ê‚Ü‚µB
+              System.Type objType(typeof(MonoScript))ã€€â†’
+            ã€€  ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã§è¨±å¯ã•ã‚Œã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‹ã€ã“ã®å‹ã€ã¾ãŸã¯ç¶™æ‰¿ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã¿ãŒãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã„ã‚Œã‚‰ã‚Œã¾ã—ã€‚
 
-              bool allowSceneObjects(false)@¨
-                ƒV[ƒ““à‚ÌƒIƒuƒWƒFƒNƒg‚ğ‹–‰Â‚·‚é‚©‚Ç‚¤‚©‚ğw’è‚·‚éboolB
-                true: ƒvƒƒWƒFƒNƒg“à‚ÌƒAƒZƒbƒg‚ÆƒV[ƒ““à‚ÌƒIƒuƒWƒFƒNƒg‚Ì—¼•û‚ğ‹–‰Â‚µ‚Ü‚·B
-                false: ƒvƒƒWƒFƒNƒg“à‚ÌƒAƒZƒbƒg‚Ì‚İ‚ğ‹–‰Â‚µ‚Ü‚·B
+              bool allowSceneObjects(false)ã€€â†’
+                ã‚·ãƒ¼ãƒ³å†…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’è¨±å¯ã™ã‚‹ã‹ã©ã†ã‹ã‚’æŒ‡å®šã™ã‚‹boolã€‚
+                true: ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå†…ã®ã‚¢ã‚»ãƒƒãƒˆã¨ã‚·ãƒ¼ãƒ³å†…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸¡æ–¹ã‚’è¨±å¯ã—ã¾ã™ã€‚
+                false: ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆå†…ã®ã‚¢ã‚»ãƒƒãƒˆã®ã¿ã‚’è¨±å¯ã—ã¾ã™ã€‚
 
-              as MonoScript: –ß‚è’l‚ğMonoScriptŒ^‚ÉƒLƒƒƒXƒg‚·‚é
+              as MonoScript: æˆ»ã‚Šå€¤ã‚’MonoScriptå‹ã«ã‚­ãƒ£ã‚¹ãƒˆã™ã‚‹
 
-                ‚ç‚µ‚¢AÅ‹ß‚ÌAI‚Í—DG‚©H
+                ã‚‰ã—ã„ã€æœ€è¿‘ã®AIã¯å„ªç§€ã‹ï¼Ÿ
              */
-            selectedScript = EditorGUILayout.ObjectField("ScriptableObjectƒXƒNƒŠƒvƒg", selectedScript, typeof(MonoScript), false)
+            selectedScript = EditorGUILayout.ObjectField("ScriptableObjectã‚¹ã‚¯ãƒªãƒ—ãƒˆ", selectedScript, typeof(MonoScript), false)
                              as MonoScript;
 
-            if (GUILayout.Button("ScriptableObjects‚ğ¶¬"))
+            if (GUILayout.Button("ScriptableObjectsã‚’ç”Ÿæˆ"))
             {
                 GenerateScriptableObjects();
             }
@@ -71,18 +69,18 @@ namespace Mamavon.MyEditor
         {
             if (selectedScript == null)
             {
-                Debug.LogError("ScriptableObjectƒXƒNƒŠƒvƒg‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢‚æI");
+                EditorUtility.DisplayDialog("ãŠã„ğŸ˜¡", "ScriptableObjectã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’é¸æŠã—ã¦ãã ã•ã„ã‚ˆï¼", "ã”ã‚ãƒ¼ã‚“ğŸ¥º");
                 return;
             }
 
             Type scriptType = selectedScript.GetClass();
             if (scriptType == null || !scriptType.IsSubclassOf(typeof(ScriptableObject)))
             {
-                Debug.LogError("‘I‘ğ‚³‚ê‚½ƒXƒNƒŠƒvƒg‚Í—LŒø‚ÈScriptableObject‚Å‚Í‚ ‚è‚Ü‚¹‚ñB");
+                EditorUtility.DisplayDialog("ã”ã‚ã‚“ã­ğŸ˜­", "ScriptableObjectã®C#ã˜ã‚ƒãªã„ã¿ãŸã„ãªã®...ã€‚", "ã”ã‚ã‚“ãªã•ã„ğŸ¥º");
                 return;
             }
 
-            // ƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚È‚¢ê‡‚Íì¬
+            // ãƒ•ã‚©ãƒ«ãƒ€ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ä½œæˆ
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
@@ -90,10 +88,10 @@ namespace Mamavon.MyEditor
 
             for (int i = 0; i < numberOfObjects; i++)
             {
-                // ‘I‘ğ‚³‚ê‚½ScriptableObject‚ğì¬
+                // é¸æŠã•ã‚ŒãŸScriptableObjectã‚’ä½œæˆ
                 ScriptableObject obj = CreateInstance(scriptType);
 
-                // ƒAƒZƒbƒg‚Æ‚µ‚Ä•Û‘¶@(folderPath/AAA_1 ,folderPath/AAA_2. ‚Ì‚æ‚¤‚É‚È‚éB)
+                // ã‚¢ã‚»ãƒƒãƒˆã¨ã—ã¦ä¿å­˜ã€€(folderPath/AAA_1 ,folderPath/AAA_2. ã®ã‚ˆã†ã«ãªã‚‹ã€‚)
                 string assetPath = $"{folderPath}/{objectName}_{i + 1}.asset";
                 AssetDatabase.CreateAsset(obj, assetPath);
             }
@@ -101,7 +99,7 @@ namespace Mamavon.MyEditor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log($"{numberOfObjects}ŒÂ‚Ì{scriptType.Name}Œ^ScriptableObjects‚ğ{folderPath}‚É¶¬‚µ‚½‚ºA‚ ‚Æ‚Í‚æ‚ë‚µ‚­");
+            Debug.Log($"{numberOfObjects}å€‹ã®{scriptType.Name}å‹ScriptableObjectsã‚’{folderPath}ã«ç”Ÿæˆã—ãŸã½ã‚ˆï½\nã‚ã¨ã¯ã‚ˆã‚ã—ããªï½");
         }
     }
 }

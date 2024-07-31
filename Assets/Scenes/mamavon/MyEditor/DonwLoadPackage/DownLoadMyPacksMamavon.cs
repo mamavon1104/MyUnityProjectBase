@@ -1,75 +1,86 @@
-#if UNITY_EDITOR
-using Mamavon.Funcs;
+ï»¿using Mamavon.Funcs;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 namespace Mamavon.DownLoad
 {
-    [CreateAssetMenu(menuName = "Mamavon Packs/DownLoad Mamavon Packs", fileName = "DownLoadMy.asset")]
-    public class DownLoadMyPacksMamavon : ScriptableObject
+    public class DownLoadMamavonPacksWindow : EditorWindow
     {
         /// <summary>
-        /// ƒAƒZƒbƒg‚ÌƒpƒX
+        /// ã‚³ãƒ”ãƒ¼å…ƒã®ãƒ‘ã‚¹ã‚‚ã†ã“ã“ã§å›ºå®šã€
+        /// ã‚­ãƒ£ãƒ³ãƒ—åœ°ã¯ã“ã“ã«ã™ã‚‹ã£ã¦è¨³
         /// </summary>
-        public string selectAssetPath;
+        private readonly static string
+        selectAssetPath = "C:\\Users\\vanntann\\Desktop\\ProjectBase\\Assets\\Scenes\\mamavon";
 
-        // Method to open a folder panel and set the ASSET_PATH
-        public void SetAssetPath()
+        /// <summary>
+        /// Assetsã‹ã‚‰å§‹ã¾ã‚‹è‡ªåˆ†ã®mamavonPathã§ã™ã€‚
+        /// </summary>
+        private string myMamavonPath;
+
+        private void OnEnable()
         {
-            string path = EditorUtility.OpenFolderPanel("Select Folder", "", "");
-            if (!string.IsNullOrEmpty(path))
-            {
-                selectAssetPath = path;
-                EditorUtility.SetDirty(this);
-                AssetDatabase.SaveAssets();
-            }
+            SetMyPath();
         }
 
-        public void SetDefaultPath()
+        private void SetMyPath()
         {
-            selectAssetPath = "C:\\Users\\vanntann\\Desktop\\ProjectBase\\Assets\\Scenes\\mamavon";
+            string projectPath = Application.dataPath;
+            string relativePath = "Scenes/mamavon";
+            myMamavonPath = Path.Combine(projectPath, relativePath);
         }
 
-        public void DownloadAllFiles(string parentDirectoryPath)
+        [MenuItem("Mamavon/My Editors/DownLoad Mamavon Packs")]
+        public static void ShowWindow()
         {
-            if (string.IsNullOrEmpty(selectAssetPath))
-            {
-                Debug.LogError("ƒAƒZƒbƒgƒpƒX‚ª‹ó‚Å‚·Bƒ_ƒEƒ“ƒ[ƒh‚Å‚«‚Ü‚¹‚ñB");
-                return;
-            }
+            GetWindow<DownLoadMamavonPacksWindow>("Mamamvonã®ç‚ºã ã‘ã®ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ€ãƒ¼");
+        }
 
-            // ƒAƒZƒbƒgƒpƒX‚©‚çƒtƒ@ƒCƒ‹‚ğæ“¾
+        private void OnGUI()
+        {
+            GUILayout.Label("MamavonPacksã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰", EditorStyles.boldLabel);
+
+            if (GUILayout.Button("mamavonãƒ™ãƒ¼ã‚¹ã‹ã‚‰æœ€æ–°ç‰ˆã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰"))
+            {
+                if (EditorUtility.DisplayDialog(
+                                        "å±é™ºã§ã™ã‹ã‚‰ã­ğŸ¤”",
+                                        "æœ¬å½“ã«ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¡ã‚ƒã„ã¾ã™ï¼Ÿ\nãƒ‡ãƒ¼ã‚¿ãŒæ¶ˆãˆã‚‹æã‚Œã‚ã‚‹ã‚ˆï¼Ÿãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—å–ã£ãŸï¼Ÿ",
+                                        "ã—ã‚ˆã†ãœğŸ¥°", "ã—ã­ãˆã‚ˆğŸ˜¡"))
+                {
+                    DownloadAllFiles();
+                    EditorUtility.DisplayDialog("å®Ÿè¡Œçµ‚äº†", "ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚³ãƒ”ãƒ¼ãŒå®Œäº†ã—ãŸã‚ˆï¼", "ä»•äº‹ã‚’å§‹ã‚ã¾ã™ğŸ˜¿");
+                }
+            }
+            EditorGUI.EndDisabledGroup();
+        }
+
+
+        private void DownloadAllFiles()
+        {
+            // ã¾ãšè‡ªåˆ†ã®mamavonãƒ•ã‚©ãƒ«ãƒ€ã‚’ç©ºã«ã™ã‚‹
+            EditorExtension.ClearDirectory(myMamavonPath);
+
             string[] files = Directory.GetDirectories(selectAssetPath);
-
             string myFilesStr = "";
-            // ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚µ‚Ä•Û‘¶
             foreach (string file in files)
             {
-                // ƒtƒ@ƒCƒ‹–¼‚Ì‚İæ“¾
                 string fileName = Path.GetFileName(file);
-
-                // ƒtƒ@ƒCƒ‹‚Ì•Û‘¶æƒpƒX
-                string destinationPath = Path.Combine(parentDirectoryPath, fileName);
-
-                myFilesStr = $"\n{destinationPath}\n{file}\n";
-
+                string destinationPath = Path.Combine(myMamavonPath, fileName);
+                myFilesStr += $"\n{destinationPath}\n{file}\n";
                 CopyFolder(file, destinationPath);
             }
-
             AssetDatabase.Refresh();
             myFilesStr.Debuglog();
-            "ƒ_ƒEƒ“ƒ[ƒh‚ªŠ®—¹‚µ‚Ü‚µ‚½".Debuglog(TextColor.Yellow);
         }
+
         private void CopyFolder(string sourceFolder, string destinationFolder)
         {
-            // ƒRƒs[æ‚ÌƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚È‚¢ê‡‚Íì¬‚·‚é
             if (!Directory.Exists(destinationFolder))
             {
                 Directory.CreateDirectory(destinationFolder);
             }
 
-            // ƒtƒ@ƒCƒ‹‚ğƒRƒs[‚·‚é
             string[] files = Directory.GetFiles(sourceFolder);
             foreach (string file in files)
             {
@@ -78,7 +89,6 @@ namespace Mamavon.DownLoad
                 File.Copy(file, destFile, true);
             }
 
-            // ƒTƒuƒtƒHƒ‹ƒ_‚ğÄ‹A“I‚ÉƒRƒs[‚·‚é
             string[] subfolders = Directory.GetDirectories(sourceFolder);
             foreach (string subfolder in subfolders)
             {
@@ -88,70 +98,4 @@ namespace Mamavon.DownLoad
             }
         }
     }
-
-    [CustomEditor(typeof(DownLoadMyPacksMamavon))]
-    public class SamplePathScriptableObjectInspector : Editor
-    {
-        private DownLoadMyPacksMamavon myScript;
-        private string parentDirectory;
-        private string parentDirectoryPath;
-
-        private void OnEnable()
-        {
-            myScript = (DownLoadMyPacksMamavon)target;
-            UpdatePaths();
-        }
-
-        /// <summary>
-        /// path‚ğæ“¾‚·‚éˆ—B
-        /// </summary>
-        private void UpdatePaths()
-        {
-            string thisObjAssetPath = AssetDatabase.GetAssetPath(myScript); // Assets/Scenes/mamavon/MyScriptableObjs/DownLoadMy.asset
-            string directory = Path.GetDirectoryName(thisObjAssetPath);     // Assets/Scenes/mamavon/MyScriptableObjs
-            parentDirectory = Directory.GetParent(directory).Name;          // MyscriptableObjs‚Ìe‚Ìmamavon
-            parentDirectoryPath = Path.Combine(directory, "..");            // Assets/Scenes/mamavon/-MyScriptableObjs-/.. 
-        }
-
-        public override void OnInspectorGUI()
-        {
-            // ƒx[ƒX‚ÌInspector GUI‚ğ•`‰æ
-            base.OnInspectorGUI();
-
-            // ƒwƒ‹ƒvƒ{ƒbƒNƒX‚ğ•\¦
-            if (parentDirectory == "mamavon")
-            {
-                EditorGUILayout.HelpBox("eƒtƒHƒ‹ƒ_‚Ì–¼‘O‚Íumamavonv‚Å‚·B", MessageType.Info);
-            }
-            else
-            {
-                EditorGUILayout.HelpBox($"eƒtƒHƒ‹ƒ_‚Ì–¼‘O‚ªu{parentDirectory}v‚Å‚·B\numamavonv‚Éİ’è‚µ‚È‚¨‚µ‚Ä‚­‚¾‚³‚¢B", MessageType.Error);
-            }
-
-            // ƒpƒX‚Ìİ’èƒ{ƒ^ƒ“
-            if (GUILayout.Button("ƒpƒX‚Ìİ’è‚ğ‚·‚é"))
-            {
-                myScript.SetAssetPath();
-                UpdatePaths(); // ƒpƒX‚ğXV
-            }
-
-            // ƒfƒtƒHƒ‹ƒgƒpƒXİ’èƒ{ƒ^ƒ“
-            if (GUILayout.Button("ƒfƒtƒHƒ‹ƒgƒpƒX‚Éİ’è‚·‚é"))
-            {
-                myScript.SetDefaultPath();
-                UpdatePaths(); // ƒpƒX‚ğXV
-            }
-
-            // eƒfƒBƒŒƒNƒgƒŠ‚ªumamavonv‚Å‚È‚¢ê‡‚Í‘ŠúƒŠƒ^[ƒ“
-            if (parentDirectory != "mamavon")
-                return;
-
-            // ƒ_ƒEƒ“ƒ[ƒhƒ{ƒ^ƒ“
-            if (GUILayout.Button("mamavonƒx[ƒX‚©‚çÅV”Å‚ğƒ_ƒEƒ“ƒ[ƒh"))
-            {
-                myScript.DownloadAllFiles(parentDirectoryPath);
-            }
-        }
-    }
 }
-#endif

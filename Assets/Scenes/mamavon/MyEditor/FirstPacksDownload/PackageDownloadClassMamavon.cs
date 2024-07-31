@@ -26,18 +26,19 @@ namespace Mamavon.DownLoad
         ProBuilder = 1 << 5,
         Cinemachine = 1 << 6,
         InputSystem = 1 << 7,
+        Navigation = 1 << 8,
 
-        ShaderGraph = 1 << 8,
         PostProcessing = 1 << 9,
         VisualEffectGraph = 1 << 10,
         UniversalRP = 1 << 11,
+        ShaderGraph = 1 << 12,
 
-        ECSPhysics = 1 << 12,
         ECSGraphics = 1 << 13,
         EntityComponentSystem = 1 << 14,
+        ECSPhysics = 1 << 15,
 
         CodePacks = UniRX | UniTask | VContainer,
-        UnityToolPacks = Recorder | ProBuilder | Cinemachine | InputSystem | Profiler,
+        UnityToolPacks = Recorder | ProBuilder | Cinemachine | InputSystem | Profiler | Navigation,
         UnityVisualPacks = ShaderGraph | PostProcessing | VisualEffectGraph | UniversalRP,
         Others = EntityComponentSystem | ECSGraphics | ECSPhysics,
 
@@ -79,6 +80,7 @@ namespace Mamavon.DownLoad
             { UnityPackages.Cinemachine, ("com.unity.cinemachine", "com.unity.cinemachine") },
             { UnityPackages.InputSystem, ("com.unity.inputsystem", "com.unity.inputsystem") },
             { UnityPackages.Profiler, ("com.unity.memoryprofiler", "com.unity.memoryprofiler") },
+            { UnityPackages.Navigation, ("com.unity.ai.navigation", ".com.unity.ai.navigation") },
             
             // Unityのグラフィック達
             { UnityPackages.ShaderGraph, ("com.unity.shadergraph", "com.unity.shadergraph") },

@@ -9,7 +9,6 @@ namespace Mamavon.MyEditor
 {
     public class BaseFileOverwriteWindowMamavon : EditorWindow
     {
-        private string sourceFolderPath = "Assets/Scenes/mamavon";
         private readonly string targetFolderPath = "C:\\Users\\vanntann\\Desktop\\ProjectBase\\Assets\\Scenes\\mamavon";
         private float progress = 0f;
         private bool isCopying = false;
@@ -17,19 +16,18 @@ namespace Mamavon.MyEditor
         [MenuItem("Mamavon /My Editors/BaseFile Overwrite")]
         public static void ShowWindow()
         {
-            GetWindow<BaseFileOverwriteWindowMamavon>("フォルダコピーツール");
+            GetWindow<BaseFileOverwriteWindowMamavon>("ベースに上書きツール");
         }
 
         private void OnGUI()
         {
-            GUILayout.Label("フォルダコピーツール", EditorStyles.boldLabel);
-            sourceFolderPath = EditorGUILayout.TextField("ソースフォルダのパス", sourceFolderPath);
+            GUILayout.Label("ベースに上書き", EditorStyles.boldLabel);
 
             EditorGUI.BeginDisabledGroup(isCopying);
-            if (GUILayout.Button("フォルダをコピー"))
+            if (GUILayout.Button("フォルダを上書きしようではないか！"))
             {
                 if (EditorUtility.DisplayDialog(
-                                        "危険ですからね",
+                                        "危険ですからね🤔",
                                         "本当にファイルを上書きします？\nこの操作は元に戻せんけどね！",
                                         "はい", "しねえよ😡"))
                 {
@@ -52,13 +50,14 @@ namespace Mamavon.MyEditor
 
         private async void CopyFolderAsync()
         {
-            string fullSourcePath = Path.Combine(Application.dataPath,
+            //このfullMyPathからtargetFolderPathに書き換え
+            string fullMyPath = Path.Combine(Application.dataPath,
                                                 "..",
-                                                sourceFolderPath).Debuglog(TextColor.Red);
+                                                "Assets/Scenes/mamavon").Debuglog(TextColor.Red);
 
-            if (!Directory.Exists(fullSourcePath))
+            if (!Directory.Exists(fullMyPath))
             {
-                Debug.LogError("ソースフォルダが存在しません: " + fullSourcePath);
+                Debug.LogError("ソースフォルダが存在しません: " + fullMyPath);
                 return;
             }
 
@@ -67,7 +66,7 @@ namespace Mamavon.MyEditor
 
             try
             {
-                await Task.Run(() => CopyFolder(fullSourcePath, targetFolderPath));
+                await Task.Run(() => CopyFolder(fullMyPath, targetFolderPath));
                 Debug.Log("フォルダのコピーが完了しました: " + targetFolderPath);
             }
             catch (IOException ex)
@@ -88,6 +87,9 @@ namespace Mamavon.MyEditor
             {
                 Directory.CreateDirectory(targetPath);
             }
+
+            EditorExtension.ClearDirectory(targetPath);
+
 
             CopyAll(new DirectoryInfo(sourcePath), new DirectoryInfo(targetPath));
         }
