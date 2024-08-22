@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Mamavon.Funcs
 {
-    internal static class VectorExtensions
+    public static class VectorExtensions
     {
         /// <summary>
         /// Vector3~Vector3‚ğs‚¢‚Ü‚·B 

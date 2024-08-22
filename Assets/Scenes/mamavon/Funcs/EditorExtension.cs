@@ -5,7 +5,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 namespace Mamavon.Funcs
 {
-    internal static class EditorExtension
+    public static class EditorExtension
     {
         /// <summary>
         /// フォルダを選択可能なパネルを表示します、
@@ -14,7 +14,7 @@ namespace Mamavon.Funcs
         /// [ProjectName/Assets～]で始まっていたらそのまま、\n
         /// 逆に、はじまっていなかったら null("") を返す。
         /// </returns>
-        internal static string OpenFolderPanel()
+        public static string OpenFolderPanel()
         {
             string assetsPath = Application.dataPath;
             string selectedFolder = EditorUtility.OpenFolderPanel("Assetsフォルダ内のフォルダを選択", assetsPath, "");
@@ -33,7 +33,7 @@ namespace Mamavon.Funcs
 
             return "";
         }
-        internal static void ClearDirectory(string directoryPath)
+        public static void ClearDirectory(string directoryPath)
         {
             if (!Directory.Exists(directoryPath))
                 return;

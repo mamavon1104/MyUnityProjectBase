@@ -51,7 +51,7 @@ namespace Mamavon.Funcs
                     .normalized;                                                    //ê≥ãKâªÇ∑ÇÈ
         }
     }
-    internal static class TransformExtention
+    public static class TransformExtention
     {
         public static void Reset(this Transform transform)
         {

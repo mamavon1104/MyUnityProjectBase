@@ -13,8 +13,48 @@ namespace Mamavon.Funcs
         Magenta,
         Cyan,
     }
-    internal static class DebugExtensions
+    public static class DebugExtensions
     {
+        /// <summary>
+        /// Debug.Logを行います。
+        /// 引数なしの場合はクラス名を表示しません。
+        /// </summary>
+        public static T Debuglog<T>(this T value, TextColor color = TextColor.White)
+        {
+            Debug.Log($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            return value;
+        }
+        /// <summary>
+        /// Debug.Logを行います。
+        /// 引数strがある場合、クラス名などは表示せずstr + 値で返します
+        /// </summary>
+        public static T Debuglog<T>(this T value, string str, TextColor color = TextColor.White)
+        {
+            Debug.Log($"{str} : {GetColorString(color)}{value}。 </color>");
+            return value;
+        }
+
+
+        /// <summary>
+        /// Debug.LogWarningを行います。
+        /// 引数なしの場合はクラス名を表示しません。
+        /// </summary>
+        public static T DebuglogWarning<T>(this T value, TextColor color = TextColor.Yellow)
+        {
+            Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            return value;
+        }
+
+        /// <summary>
+        /// Debug.LogErrorを行います。
+        /// 引数なしの場合はクラス名を表示しません。
+        /// </summary>
+        public static T DebuglogError<T>(this T value, TextColor color = TextColor.Red)
+        {
+            Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            return value;
+        }
+
         /// <summary>
         /// TextColorに合った色を返します。
         /// </summary>
@@ -39,36 +79,6 @@ namespace Mamavon.Funcs
         private static string GetColorString(TextColor color)
         {
             return color == TextColor.White ? "" : $"<color={ConvertEnumToColorCode(color)}>";
-        }
-
-        /// <summary>
-        /// Debug.Logを行います。
-        /// 引数なしの場合はクラス名を表示しません。
-        /// </summary>
-        public static T Debuglog<T>(this T value, TextColor color = TextColor.White)
-        {
-            Debug.Log($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
-            return value;
-        }
-
-        /// <summary>
-        /// Debug.LogWarningを行います。
-        /// 引数なしの場合はクラス名を表示しません。
-        /// </summary>
-        public static T DebuglogWarning<T>(this T value, TextColor color = TextColor.Yellow)
-        {
-            Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
-            return value;
-        }
-
-        /// <summary>
-        /// Debug.LogErrorを行います。
-        /// 引数なしの場合はクラス名を表示しません。
-        /// </summary>
-        public static T DebuglogError<T>(this T value, TextColor color = TextColor.Red)
-        {
-            Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
-            return value;
         }
     }
 }
