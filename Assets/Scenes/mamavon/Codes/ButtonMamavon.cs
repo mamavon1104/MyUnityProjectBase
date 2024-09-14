@@ -4,28 +4,30 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(Button))]
-public class ButtonMamavon : MonoBehaviour
+namespace Mamavon.Code
 {
-    /// <summary>
-    /// 設定されてるunityEvents;
-    /// </summary>
-    [Header("ボタンイベント"), SerializeField] UnityEvent events;
-    [Header("ボタン、自動で入れられる"), SerializeField] Button button;
-    [Header("デバッグするかどうか"), SerializeField] bool isDebug = false;
-    private void Start()
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(Button))]
+    public class ButtonMamavon : MonoBehaviour
     {
-        if (button == null)
-            button = GetComponent<Button>();
-
-        button.onClick = (Button.ButtonClickedEvent)events;
-        button.OnClickThrottle().Subscribe(_ =>
+        /// <summary>
+        /// 設定されてるunityEvents;
+        /// </summary>
+        [Header("ボタンイベント"), SerializeField] UnityEvent events;
+        [Header("ボタン、自動で入れられる"), SerializeField] Button button;
+        [Header("デバッグするかどうか"), SerializeField] bool isDebug = false;
+        private void Start()
         {
-            if (isDebug)
-                button.onClick.Debuglog().Invoke();
-            else
-                button.onClick.Invoke();
-        });
+            if (button == null)
+                button = GetComponent<Button>();
+
+            button.OnClickThrottle().Subscribe(_ =>
+            {
+                if (isDebug)
+                    events?.Debuglog().Invoke();
+                else
+                    events?.Invoke();
+            }).AddTo(button);
+        }
     }
 }
