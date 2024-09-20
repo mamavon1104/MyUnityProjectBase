@@ -1,26 +1,12 @@
+// コピーペースト元 : https://gist.github.com/Hertzole/ac269f3148bc5192cc2eb6d472870d24
+// 最強、天才、こういうのを作ってみたいよね。
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 namespace Mamavon.Useful
 {
-    public class ChangeSceneMaster : MonoBehaviour
-    {
-        [SerializeField]
-        SceneObject m_SceneObject;
-        public SceneObject SceneObject
-        {
-            set { m_SceneObject = value; }
-        }
-        public async void RoadScene()
-        {
-            var asyncLoad = SceneManager.LoadSceneAsync(m_SceneObject);
-            asyncLoad.allowSceneActivation = true;
-            await asyncLoad;
-        }
-    }
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
     [System.Serializable]
     public class SceneObject
     {
