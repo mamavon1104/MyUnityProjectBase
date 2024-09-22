@@ -8,19 +8,19 @@ using UnityEngine;
 namespace Mamavon.Code
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class Player3D : MonoBehaviour
+    public class Player2D : MonoBehaviour
     {
         [SerializeField] float m_moveSpeed = 10f;
         [SerializeField] float m_rotateSpeed = 10f;
-        [SerializeField] private float m_jumpForce = 10f; // ジャンプの力
+        [SerializeField] private float m_jumpForce = 10f;
         [SerializeField] private Transform m_cameraTrans = default;
-        [SerializeField] private Player3DGroundData m_groundData;
+        [SerializeField] private Player2DGroundData m_groundData;
 
         private Transform _myT;
         private Rigidbody _rig;
         private Vector2 _move;
         private Vector3 _myMoveVec;
-        private RaycastHit _hit;
+        private RaycastHit2D _hit;
         private Quaternion _targetRotation;
 
         private void Start()
@@ -66,7 +66,7 @@ namespace Mamavon.Code
         // 地面に接しているかどうかをチェックするメソッド
         private bool IsGrounded()
         {
-            if (!m_groundData.CheckGround(_myT, out _hit).Debuglog(TextColor.Green))
+            if (!m_groundData.CheckGround2D(_myT, out _hit).Debuglog(TextColor.Green))
                 return false;
 
             return true;
@@ -76,7 +76,7 @@ namespace Mamavon.Code
             if (_myT != null && m_groundData != null)
             {
                 bool isGrounded = IsGrounded();
-                m_groundData.DrawGroundCheckGizmo(_myT, isGrounded);
+                m_groundData.DrawGroundCheckGizmo2D(_myT, isGrounded);
             }
         }
     }

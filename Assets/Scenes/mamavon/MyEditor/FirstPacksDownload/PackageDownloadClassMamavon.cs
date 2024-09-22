@@ -7,7 +7,7 @@ using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
-namespace Mamavon.DownLoad
+namespace Mamavon.MyEditor
 {
     /// <summary>
     /// ユニティーパッケージに対応する列挙型、この世の核、世界を作り出すための動力、命かけても守れ。

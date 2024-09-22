@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0142685a6904ab942bfc856e23d97cac, type: 3}
-  m_Name: SphereColliderScriptsObjs
+  m_Script: {fileID: 11500000, guid: 60b4ccef6ef98f74f96675c659da6f19, type: 3}
+  m_Name: BoxCastGroundData
   m_EditorClassIdentifier: 
   length: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
   isDraw: 1
-  gizmoAlpha: 1
-  radius: 0.5
+  gizmoAlpha: 0.795
+  halfScale: {x: 0.4999, y: 0.4999, z: 0.4999}

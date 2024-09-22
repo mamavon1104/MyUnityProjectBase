@@ -1,8 +1,10 @@
 
 #if UNITY_EDITOR
+using Mamavon.Funcs;
 using UnityEditor;
 using UnityEngine;
-namespace Mamavon.DownLoad
+
+namespace Mamavon.MyEditor
 {
     /// <summary>
     /// パッケージ選択用の ScriptableObjectだよ。

@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Mamavon.DownLoad
+namespace Mamavon.MyEditor
 {
     public class DownLoadMamavonPacksWindow : EditorWindow
     {

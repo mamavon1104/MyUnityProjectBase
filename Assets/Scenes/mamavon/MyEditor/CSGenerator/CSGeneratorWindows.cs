@@ -78,7 +78,7 @@ namespace Mamavon.Funcs
             new AnyExtensionsCode()
         };
 
-        private string folderPath = "Assets/ScriptableObjects";
+        private string folderPath = "Assets/Scenes/mamavon";
         private string templateContents;
         private int selectedTab = 0;
 

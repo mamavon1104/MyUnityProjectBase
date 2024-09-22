@@ -1,8 +1,10 @@
 using UnityEngine;
+using Mamavon.Funcs;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-namespace Mamavon.Funcs.Scriptables
+
+namespace Mamavon.Data
 {
     /// <summary>
     /// パッケージ選択用の ScriptableObjectだよ。
