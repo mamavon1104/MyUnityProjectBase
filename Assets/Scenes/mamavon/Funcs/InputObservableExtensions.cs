@@ -125,15 +125,4 @@ namespace Mamavon.Funcs
         public static IObservable<float> OnAxisInput(string axisName)
             => UpdateObservable.Select(_ => Input.GetAxis(axisName));
     }
-    //public class a : MonoBehaviour
-    //{
-
-    //    public void AAA()
-    //    {
-    //        InputObservableUtility.OnMouseDown(0).Subscribe(_ =>
-    //        {
-
-    //        });
-    //    }
-    //}
 }
