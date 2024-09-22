@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 1797452810}
   - component: {fileID: 1797452809}
   - component: {fileID: 1797452808}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,11 +816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403d7c665b940ea43b8bb6b5168526cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerMoveSpeed: 10
-  m_playerRotateSpeed: 1200
+  m_moveSpeed: 10
+  m_rotateSpeed: 10
   m_jumpForce: 10
   m_cameraTrans: {fileID: 805554164}
-  m_collider: {fileID: 11400000, guid: 033da4a493c79e94486a92bdcf4d5345, type: 2}
+  m_groundData: {fileID: 11400000, guid: 033da4a493c79e94486a92bdcf4d5345, type: 2}
 --- !u!54 &1797452809
 Rigidbody:
   m_ObjectHideFlags: 0

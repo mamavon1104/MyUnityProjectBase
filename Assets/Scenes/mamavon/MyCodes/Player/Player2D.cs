@@ -7,33 +7,32 @@ using UnityEngine;
 
 namespace Mamavon.Code
 {
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Player2D : MonoBehaviour
     {
         [SerializeField] float m_moveSpeed = 10f;
         [SerializeField] float m_rotateSpeed = 10f;
         [SerializeField] private float m_jumpForce = 10f;
-        [SerializeField] private Transform m_cameraTrans = default;
         [SerializeField] private Player2DGroundData m_groundData;
 
         private Transform _myT;
-        private Rigidbody _rig;
-        private Vector2 _move;
-        private Vector3 _myMoveVec;
+        private Rigidbody2D _rig;
+        private float _moveFloat;
         private RaycastHit2D _hit;
         private Quaternion _targetRotation;
 
         private void Start()
         {
             _myT = transform;
-            _rig = GetComponent<Rigidbody>();
+            _rig = GetComponent<Rigidbody2D>();
             _targetRotation = _myT.rotation;
 
             switch (m_groundData)
             {
-                case SphereCastGroundData:
+                case CircleCastGroundData collider:
+                    collider.Radius = _myT.localScale.x;
                     break;
-                case CubeCastGroundData collider:
+                case BoxCastGroundData collider:
                     collider.Scale = _myT.localScale;
                     break;
             }
@@ -44,23 +43,22 @@ namespace Mamavon.Code
                 .ThrottleFirst(TimeSpan.FromMilliseconds(10))
                 .Subscribe(_ =>
                 {
-                    _rig.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+                    _rig.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
                 }).AddTo(this);
         }
 
         private void FixedUpdate()
         {
-            _myMoveVec = m_cameraTrans.CalculateMovementDirection(_move) * m_moveSpeed;
-            _rig.velocity = new Vector3(_myMoveVec.x, _rig.velocity.y, _myMoveVec.z);
+            _rig.velocity = new Vector3(_moveFloat * m_moveSpeed, _rig.velocity.y);
         }
         private void Update()
         {
-            _move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            _moveFloat = Input.GetAxisRaw("Horizontal");
 
-            if (_myMoveVec.sqrMagnitude > 0)
-                _targetRotation = Quaternion.LookRotation(_myMoveVec);
+            //if (_myMoveVec.sqrMagnitude > 0)
+            //    _targetRotation = Quaternion.LookRotation(_myMoveVec);
+            //_myT.rotation = Quaternion.RotateTowards(_myT.rotation, _targetRotation, m_rotateSpeed * Time.deltaTime);
 
-            _myT.rotation = Quaternion.RotateTowards(_myT.rotation, _targetRotation, m_rotateSpeed * Time.deltaTime);
         }
 
         // 地面に接しているかどうかをチェックするメソッド
