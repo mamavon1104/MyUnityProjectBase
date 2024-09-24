@@ -52,5 +52,50 @@ namespace Mamavon.Data
             // 終了位置の矩形を描画
             Gizmos.DrawWireCube(endPosition, scale);
         }
+
+        /// <summary>
+        /// プレイヤーのオブジェクトの横に壁があるかどうかをチェックします。
+        /// BoxCast2Dを使用しています
+        /// </summary>
+        /// <param name="obj">チェックするTransformオブジェクト</param>
+        /// <param name="direction">チェックする方向（右または左）</param>
+        /// <param name="hit">壁チェックの結果としてのRaycastHit2Dオブジェクト</param>
+        /// <returns>オブジェクトの横に壁がある場合はtrue、それ以外の場合はfalse</returns>
+        public override bool CheckSideWall2D(Transform obj, out RaycastHit2D hit, Vector2 direction)
+        {
+            // BoxCast2Dを使用して壁チェックを実行します。
+            hit = Physics2D.BoxCast(
+                obj.position,                                // Objの位置
+                scale,                                       // ボックスのサイズ
+                obj.rotation.eulerAngles.z,                  // ボックスの回転角度
+                direction,                                   // BoxCastの方向（右または左）
+                base.length,                           // BoxCastの最大距離
+                base.groundLayer                             // 衝突を検出するレイヤーマスク
+            );
+
+            return hit.collider != null;
+        }
+
+        /// <summary>
+        /// 横方向の壁チェックのギズモを描画します。
+        /// </summary>
+        /// <param name="obj">チェックするTransformオブジェクト</param>
+        /// <param name="direction">チェックする方向（右または左）</param>
+        /// <param name="isWallDetected">壁が検出されたかどうか</param>
+        public override void DrawSideWallCheckGizmo2D(Transform obj, bool isWallDetected, Vector2 direction)
+        {
+            if (!base.isDraw)
+                return;
+
+            Color gizmoColor = isWallDetected ? Color.yellow : Color.cyan;
+            gizmoColor.a = base.gizmoAlpha; // 透明度を設定
+
+            Gizmos.color = gizmoColor;
+
+            Vector2 endPosition = (Vector2)obj.position + direction * base.length;
+
+            // 終了位置の矩形を描画
+            Gizmos.DrawWireCube(endPosition, scale);
+        }
     }
 }

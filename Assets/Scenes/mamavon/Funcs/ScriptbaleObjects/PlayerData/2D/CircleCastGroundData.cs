@@ -26,6 +26,11 @@ namespace Mamavon.Data
             return hit.collider != null;
         }
 
+        public override bool CheckSideWall2D(Transform obj, out RaycastHit2D hit, Vector2 direction)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void DrawGroundCheckGizmo2D(Transform obj, bool isGrounded)
         {
             if (!base.isDraw)
@@ -42,6 +47,11 @@ namespace Mamavon.Data
             Vector3 center = new Vector3(endPosition.x, endPosition.y, 0);
             Vector3 size = new Vector3(r * 2, r * 2, 0);
             Gizmos.DrawWireSphere(center, r);
+        }
+
+        public override void DrawSideWallCheckGizmo2D(Transform obj, bool isWallDetected, Vector2 direction)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

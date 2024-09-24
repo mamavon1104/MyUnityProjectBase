@@ -1,5 +1,4 @@
 using Mamavon.Data;
-using Mamavon.Funcs;
 using System;
 using UniRx;
 using UniRx.Triggers;
@@ -21,6 +20,7 @@ namespace Mamavon.Code
         private RaycastHit2D _hit;
         private Quaternion _targetRotation;
 
+        [Range(0, 1f), SerializeField] private float fallSpeed;
         private void Start()
         {
             _myT = transform;
@@ -39,7 +39,8 @@ namespace Mamavon.Code
 
             this.UpdateAsObservable()
                 .TakeUntilDestroy(this)
-                .Where(_ => Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+                .Where(_ => Input.GetKeyDown(KeyCode.Space))
+                .Where(_ => IsGrounded() || IsSideWall())
                 .ThrottleFirst(TimeSpan.FromMilliseconds(10))
                 .Subscribe(_ =>
                 {
@@ -64,17 +65,20 @@ namespace Mamavon.Code
         // 地面に接しているかどうかをチェックするメソッド
         private bool IsGrounded()
         {
-            if (!m_groundData.CheckGround2D(_myT, out _hit).Debuglog(TextColor.Green))
-                return false;
-
-            return true;
+            return m_groundData.CheckGround2D(_myT, out _hit) ? true : false;
+        }
+        private bool IsSideWall()
+        {
+            return m_groundData.CheckSideWall2D(_myT, out _hit, _myT.right) ? true : false;
         }
         private void OnDrawGizmos()
         {
             if (_myT != null && m_groundData != null)
             {
                 bool isGrounded = IsGrounded();
+                bool isSideWall = IsSideWall();
                 m_groundData.DrawGroundCheckGizmo2D(_myT, isGrounded);
+                m_groundData.DrawSideWallCheckGizmo2D(_myT, isSideWall, _myT.right);
             }
         }
     }
