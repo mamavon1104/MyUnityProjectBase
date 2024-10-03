@@ -1,0 +1,53 @@
+==========================================================================================================================================================
+
+https://fonts.google.com/specimen/RocknRoll+One
+RocknRoll Oneフォント
+
+Copyright 2020 The RocknRoll Project Authors (https://github.com/fontworks-fonts/RocknRoll)
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at: https://openfontlicense.org
+
+==========================================================================================================================================================
+
+https://fonts.google.com/specimen/Shippori+Mincho
+Shippori Minchoフォント
+
+Copyright 2021 The Shippori Mincho Project Authors (https://github.com/fontdasu/ShipporiMincho)
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:https://openfontlicense.org
+
+==========================================================================================================================================================
+
+https://fonts.google.com/noto/specimen/Noto+Sans+JP
+ Noto Sans Japaneseフォント
+
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at: https://openfontlicense.org
+
+==========================================================================================================================================================
+
+http://font.cutegirl.jp/
+にくまるフォント
+
+Copyright (C) 2002-2014 M+ FONTS PROJECT
+Copyright (C) 2014 Fontna.com
+Copyright (C) 2014 Kato Masashi
+
+==========================================================================================================================================================
+
+https://font.cutegirl.jp/jkmarugo.html
+JK丸ゴシックフォント
+
+ありがたきことに再配布についてはお咎めなしです、本当に有りがたき幸せ。
+噛みしめます、全てのJK丸ゴシックフォント様に感謝。一日一万回感謝のタイピング突き
+
+JK FONTS
+
+==========================================================================================================================================================
+
+https://gist.github.com/kgsi/ed2f1c5696a2211c1fd1e1e198c96ee4
+japanese_full
+色々なテキストが入っている、便利、
+
+==========================================================================================================================================================

@@ -17,24 +17,27 @@ namespace Mamavon.MyEditor
         {
             return @"using UniRx;
 using UnityEngine;
-/// <summary>
-/// ScriptableObjectだよ。
-/// </summary>
-[CreateAssetMenu(fileName = ""{0}"", menuName = ""Mamavon Packs/ScriptableObject/{0}"")]
-public class {0} : ScriptableObject
+namespace {0}
 {{
-    public ReactiveProperty<int> testReactiveProperty;
-    [SerializeField] int test;
-    public int Test
+    /// <summary>
+    /// ScriptableObjectだよ。
+    /// </summary>
+    [CreateAssetMenu(fileName = ""{1}"", menuName = ""Mamavon Packs/ScriptableObject/{1}"")]
+    public class {1} : ScriptableObject
     {{
-        get {{ return test; }}
-    }}
-    public void TestFunc(int i)
-    {{
-    }}
-    [ContextMenu(""実行テスト"")]
-    private void TestFunc()
-    {{
+        public ReactiveProperty<int> testReactiveProperty;
+        [SerializeField] int test;
+        public int Test
+        {{
+            get {{ return test; }}
+        }}
+        public void TestFunc(int i)
+        {{
+        }}
+        [ContextMenu(""実行テスト"")]
+        private void TestFunc()
+        {{
+        }}
     }}
 }}";
         }
@@ -51,9 +54,9 @@ public class {0} : ScriptableObject
         public string GetCode()
         {
             return @"using UnityEngine;
-namespace Mamavon.Funcs
+namespace {0}
 {{
-    public static class {0}
+    public static class {1}
     {{
         /// <summary>
         ///
@@ -67,6 +70,15 @@ namespace Mamavon.Funcs
         }
     }
     #endregion
+
+    public enum AnyExtensionsNamespace
+    {
+        Mamavon_Funcs,
+        Mamavon_Useful,
+        Mamavon_Data,
+        Mamavon_Code
+    }
+
     public class MultiTabScriptGeneratorWindow : EditorWindow
     {
         private string[] classNames = new string[] { "ScriptableObject_CS", "UnityWindow_CS", "AnyExtensions_CS" };
@@ -81,6 +93,7 @@ namespace Mamavon.Funcs
         private string folderPath = "Assets/Scenes/mamavon";
         private string templateContents;
         private int selectedTab = 0;
+        private AnyExtensionsNamespace selectedNamespace = AnyExtensionsNamespace.Mamavon_Funcs;
 
         private Vector2 mainScrollPosition;
         private Vector2[] scrollPositions = new Vector2[3];
@@ -95,11 +108,15 @@ namespace Mamavon.Funcs
         {
             mainScrollPosition = EditorGUILayout.BeginScrollView(mainScrollPosition);
 
-
             selectedTab = GUILayout.Toolbar(selectedTab, tabNames);
 
             GUILayout.Label($"{tabNames[selectedTab]}C#テンプレート生成くん", EditorStyles.boldLabel);
             classNames[selectedTab] = EditorGUILayout.TextField("クラス名", classNames[selectedTab]);
+
+            if (selectedTab != 1) // AnyExtensions tab
+            {
+                selectedNamespace = (AnyExtensionsNamespace)EditorGUILayout.EnumPopup("Namespace", selectedNamespace);
+            }
 
             EditorGUILayout.BeginHorizontal();
             folderPath = EditorGUILayout.TextField("保存フォルダパス", folderPath);
@@ -113,7 +130,14 @@ namespace Mamavon.Funcs
 
             EditorGUILayout.LabelField("テンプレートはこちら ： ");
             scrollPositions[selectedTab] = EditorGUILayout.BeginScrollView(scrollPositions[selectedTab], GUILayout.Height(200));
-            EditorGUILayout.LabelField(string.Format(templateContents, classNames[selectedTab]), EditorStyles.textArea);
+            if (selectedTab != 1) // AnyExtensions tab
+            {
+                EditorGUILayout.LabelField(string.Format(templateContents, selectedNamespace.ToString().Replace("_", "."), classNames[selectedTab]), EditorStyles.textArea);
+            }
+            else
+            {
+                EditorGUILayout.LabelField(string.Format(templateContents, classNames[selectedTab]), EditorStyles.textArea);
+            }
             EditorGUILayout.EndScrollView();
 
             if (GUILayout.Button($"{tabNames[selectedTab]}クラスを生成"))
@@ -137,11 +161,20 @@ namespace Mamavon.Funcs
                 Directory.CreateDirectory(folderPath);
             }
 
-            string scriptContent = string.Format(templateContents, classNames[tabIndex]);
+            string scriptContent;
+            if (tabIndex != 1) // AnyExtensions tab
+            {
+                scriptContent = string.Format(templateContents, selectedNamespace.ToString().Replace("_", "."), classNames[tabIndex]);
+            }
+            else
+            {
+                scriptContent = string.Format(templateContents, classNames[tabIndex]);
+            }
+
             string scriptPath = Path.Combine(folderPath, $"{classNames[tabIndex]}.cs");
             File.WriteAllText(scriptPath, scriptContent);
             AssetDatabase.Refresh();
-            Debug.Log($"新しい{(tabIndex == 0 ? "ScriptableObject" : tabIndex == 1 ? "B" : "C")}クラス {classNames[tabIndex]} を {folderPath} に生成しました。");
+            Debug.Log($"新しいクラス {classNames[tabIndex]} を {folderPath} に生成しました。");
         }
     }
 }

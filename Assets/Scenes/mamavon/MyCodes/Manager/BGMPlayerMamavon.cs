@@ -1,9 +1,8 @@
 using Cysharp.Threading.Tasks;
-using Mamavon.Useful;
 using System;
 using UniRx;
 using UnityEngine;
-namespace Mamavon.Funcs
+namespace Mamavon.Useful
 {
     public class BGMPlayerMamavon : SingletonMonoBehaviour<BGMPlayerMamavon>
     {

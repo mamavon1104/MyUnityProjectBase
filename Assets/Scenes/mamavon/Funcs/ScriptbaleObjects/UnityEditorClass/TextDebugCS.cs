@@ -23,7 +23,7 @@ namespace Mamavon.Data
     }
 #if UNITY_EDITOR
     [CustomEditor(typeof(TextDebugCS))] //typeof‚Á‚ÄrequireComponent‚Æ“¯‚¶Š´‚¶‚ÅŽg‚¦‚é‚Ý‚½‚¢‚Ë
-    public class TextDebugEditor : Editor
+    public class TextDebugEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

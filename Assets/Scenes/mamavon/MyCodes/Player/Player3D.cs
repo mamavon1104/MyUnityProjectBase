@@ -12,6 +12,7 @@ namespace Mamavon.Code
     {
         [SerializeField] float m_moveSpeed = 10f;
         [SerializeField] float m_rotateSpeed = 10f;
+        [SerializeField] float m_maxspeed = 10f;
         [SerializeField] private float m_jumpForce = 10f; // ƒWƒƒƒ“ƒv‚Ì—Í
         [SerializeField] private Transform m_cameraTrans = default;
         [SerializeField] private Player3DGroundData m_groundData;
@@ -51,8 +52,12 @@ namespace Mamavon.Code
         private void FixedUpdate()
         {
             _myMoveVec = m_cameraTrans.CalculateMovementDirection(_move) * m_moveSpeed;
-            _rig.velocity = new Vector3(_myMoveVec.x, _rig.velocity.y, _myMoveVec.z);
+            if (_rig.velocity.magnitude < m_maxspeed)
+            {
+                _rig.AddForce(new Vector3(_myMoveVec.x, 0, _myMoveVec.z));
+            }
         }
+
         private void Update()
         {
             _move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));

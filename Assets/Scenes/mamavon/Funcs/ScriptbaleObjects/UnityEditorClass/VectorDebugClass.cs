@@ -15,7 +15,7 @@ namespace Mamavon.Funcs.Scriptables
     }
 #if UNITY_EDITOR
     [CustomEditor(typeof(VectorScripObjs))] //typeof‚Á‚ÄrequireComponent‚Æ“¯‚¶Š´‚¶‚ÅŽg‚¦‚é‚Ý‚½‚¢‚Ë
-    public class VectorScripObjsEditor : Editor
+    public class VectorScripObjsEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

@@ -25,11 +25,11 @@ public class SetSceneCommands : MonoBehaviour
     {
         commandVsLevelDict = m_commandVsLevel.ToDictionary(p => p.command.ToLower(), p => p.scene);
 
-        SecretCommands.KeyCodeCommandEvent += OnCommandOfScene;
+        SecretCommandsManager.KeyCodeCommandEvent += OnCommandOfScene;
     }
     private void OnDisable()
     {
-        SecretCommands.KeyCodeCommandEvent -= OnCommandOfScene;
+        SecretCommandsManager.KeyCodeCommandEvent -= OnCommandOfScene;
     }
     private void OnCommandOfScene(string command)
     {

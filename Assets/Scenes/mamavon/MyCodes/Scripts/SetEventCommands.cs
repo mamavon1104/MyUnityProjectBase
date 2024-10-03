@@ -23,11 +23,11 @@ public class SetEventCommands : MonoBehaviour
     {
         commandVsEventDict = m_commandVsEvent.ToDictionary(p => p.command.ToLower(), p => p.myEvent);
 
-        SecretCommands.KeyCodeCommandEvent += OnCommandOfEvent;
+        SecretCommandsManager.KeyCodeCommandEvent += OnCommandOfEvent;
     }
     private void OnDisable()
     {
-        SecretCommands.KeyCodeCommandEvent -= OnCommandOfEvent;
+        SecretCommandsManager.KeyCodeCommandEvent -= OnCommandOfEvent;
     }
     private void OnCommandOfEvent(string command)
     {

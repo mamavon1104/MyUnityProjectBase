@@ -5,7 +5,7 @@
  という名前が付いている奴は自分が書いたUnityを便利に使う為の関数、拡張機能、コードです。
 
 「namespace Mamavon.Func」
- Monobehavoiurが付いていない関数の塊クラスが管理されています。変数などはほぼなく
+ Monobehavoiurが付いていない関数の塊クラスが管理されています(Extensions系統か)。変数などはほぼなく
  ・public static void ～～～()
  ・public static void ～～～(this T _)
  の様に拡張メソッドも管理されています。
@@ -17,7 +17,10 @@
  普通のコード！いろんなゲームに使えるコードです！
 
 「namespace Mamavon.Data」
- ScriptableObject等のクラスについてます。Playerのデータとか色々なデータを保存しています。
+ ScriptableObject,Monobehaviour等のクラスについてます。Playerのデータとか色々なデータを保存しています。
 
 「namespace Mamavon.MyEditor」
  EditorWindow拡張のクラスについています。大体はMamavon / ～～ という形でwindowを開けます。
+
+
+ これは絶対ではない！！いつか消すかも！それまでこれでやるわ！よろしくな！
