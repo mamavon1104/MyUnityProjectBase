@@ -2,7 +2,6 @@ using Mamavon.Useful;
 using System;
 using System.Collections.Generic;
 using UniRx;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
@@ -32,32 +31,3 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
     }
 }
 
-public class SetInputAction : MonoBehaviour
-{
-    [SerializeField] InputActionAsset inputActions;
-
-    private void OnEnable()
-    {
-        var manager = InputWrapperManager.Instance;
-        manager.RegisterAction<Vector2>("move", inputActions.FindAction("move"));
-        manager.RegisterAction<float>("jump", inputActions.FindAction("jump"));
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-}
-
-public class Player : MonoBehaviour
-{
-    private void Start()
-    {
-        var manager = InputWrapperManager.Instance;
-        manager.GetObservable<Vector2>("move").Subscribe(Move);
-        manager.GetObservable<float>("jump").Subscribe(_ => Jump());
-    }
-
-    private void Move(Vector2 v) { /*処理*/ }
-    private void Jump() { /*処理*/ }
-}

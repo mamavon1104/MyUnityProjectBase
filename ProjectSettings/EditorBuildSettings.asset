@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Scenes/Test/scene1 1.unity
     guid: ff24f7dcb0adc364caf263c5fefdd6ae
   - enabled: 1
-    path: Assets/Scenes/Scenes/Stages/Stage.unity
+    path: Assets/Scenes/Scenes/Stages/Stage3D.unity
     guid: ada4eabf100c2774b9a7092ad42d125d
   - enabled: 1
     path: Assets/Scenes/Scenes/Stages/Stage2d.unity

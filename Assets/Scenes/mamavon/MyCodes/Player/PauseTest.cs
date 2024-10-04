@@ -3,7 +3,7 @@ using Mamavon.Useful;
 using UniRx;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class PauseTest : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
