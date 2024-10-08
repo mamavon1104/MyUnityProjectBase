@@ -44,6 +44,11 @@ namespace Mamavon.Funcs
             Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
             return value;
         }
+        public static T DebuglogWarning<T>(this T value, string str, TextColor color = TextColor.Yellow)
+        {
+            Debug.LogWarning($"{str} : {GetColorString(color)}{value}。 </color>");
+            return value;
+        }
 
         /// <summary>
         /// Debug.LogErrorを行います。
@@ -52,6 +57,11 @@ namespace Mamavon.Funcs
         public static T DebuglogError<T>(this T value, TextColor color = TextColor.Red)
         {
             Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            return value;
+        }
+        public static T DebuglogError<T>(this T value, string str, TextColor color = TextColor.Red)
+        {
+            Debug.LogError($"{str} : {GetColorString(color)}{value}。 </color>");
             return value;
         }
 

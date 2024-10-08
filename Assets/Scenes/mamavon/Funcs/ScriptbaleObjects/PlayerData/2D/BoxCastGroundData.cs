@@ -24,17 +24,46 @@ namespace Mamavon.Data
         /// <returns>オブジェクトが地面に接している場合はtrue、それ以外の場合はfalse</returns>
         public override bool CheckGround2D(Transform obj, out RaycastHit2D hit)
         {
-            // BoxCast2Dを使用して地面チェックを実行します。
-            hit = Physics2D.BoxCast(
-                obj.position,                                // Objの位置
-                scale,                                       // ボックスのサイズ
-                obj.rotation.eulerAngles.z,                  // ボックスの回転角度
-                Vector2.down,                                // BoxCastの方向（下方向）
-                base.length,                                 // BoxCastの最大距離
-                base.groundLayer                             // 衝突を検出するレイヤーマスク
+            ContactFilter2D filter = new ContactFilter2D();　　//filterに対して足していくらしい
+            filter.useTriggers = false;  // トリガーを無視
+            filter.SetLayerMask(base.groundLayer);
+
+            RaycastHit2D[] results = new RaycastHit2D[1];
+
+            int hitCount = Physics2D.BoxCast(
+                obj.position,
+                scale,
+                obj.rotation.eulerAngles.z,
+                Vector2.down,
+                filter,
+                results,
+                base.length
             );
 
-            return hit.collider != null;
+            if (hitCount > 0)
+            {
+                hit = results[0];
+                return true;
+            }
+            else
+            {
+                hit = new RaycastHit2D();
+                return false;
+            }
+
+            #region Trigger無視をしないほう
+            // BoxCast2Dを使用して地面チェックを実行します。
+            //hit = Physics2D.BoxCast(
+            //    obj.position,                                // Objの位置
+            //    scale,                                       // ボックスのサイズ
+            //    obj.rotation.eulerAngles.z,                  // ボックスの回転角度
+            //    Vector2.down,                                // BoxCastの方向（下方向）
+            //    base.length,                                 // BoxCastの最大距離
+            //    base.groundLayer                             // 衝突を検出するレイヤーマスク
+            //);
+            //return hit.collider != null;
+            #endregion
+
         }
 
         public override void DrawGroundCheckGizmo2D(Transform obj, bool isGrounded)
