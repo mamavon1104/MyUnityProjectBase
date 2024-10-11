@@ -796,7 +796,9 @@ GameObject:
   - component: {fileID: 1797452811}
   - component: {fileID: 1797452810}
   - component: {fileID: 1797452809}
+  - component: {fileID: 1797452808}
   - component: {fileID: 1797452814}
+  - component: {fileID: 1797452815}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -804,6 +806,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1797452808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797452807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403d7c665b940ea43b8bb6b5168526cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_moveSpeed: 10
+  m_rotateSpeed: 10
+  m_maxspeed: 10
+  m_cameraTrans: {fileID: 805554164}
+  m_move: {fileID: 11400000, guid: f598345e7fc903241a9a8534b94d0e66, type: 2}
 --- !u!54 &1797452809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -932,6 +951,21 @@ MonoBehaviour:
   velocityCS:
     _angularVelocity: {x: 0, y: 0, z: 0}
     _velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &1797452815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797452807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af0cc2591bae5045b49e558cc83bcb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_jumpForce: 10
+  m_groundData: {fileID: 11400000, guid: 033da4a493c79e94486a92bdcf4d5345, type: 2}
+  m_jump: {fileID: 11400000, guid: 2a210af3a56c8d747b606faad0b23eb2, type: 2}
 --- !u!43 &1938514026
 Mesh:
   m_ObjectHideFlags: 0

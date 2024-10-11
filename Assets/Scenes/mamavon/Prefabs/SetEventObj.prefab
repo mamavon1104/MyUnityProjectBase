@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4595827926660839788}
   - component: {fileID: 775975841549647142}
-  - component: {fileID: 4506224000092374111}
+  - component: {fileID: 6270833586136473959}
   m_Layer: 0
   m_Name: SetEventObj
   m_TagString: SetValueObj
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_commandVsLevel:
   - command: a
     sceneObj:
-      m_SceneName: scene1
+      m_SceneName: New Scene
   - command: c
     sceneObj:
       m_SceneName: Stage2d
@@ -58,7 +58,7 @@ MonoBehaviour:
   - command: t
     sceneObj:
       m_SceneName: nowScene
---- !u!114 &4506224000092374111
+--- !u!114 &6270833586136473959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +67,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 1227355159982891262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afaf741710b1ba147aed5326fefec2d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pause: {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Join
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 51fa8669-4d28-45fb-8e21-cf672ef3df4f
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 0}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1

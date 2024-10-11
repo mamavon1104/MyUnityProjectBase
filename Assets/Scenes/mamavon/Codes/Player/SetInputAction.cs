@@ -1,7 +1,6 @@
 ﻿using Mamavon.Data;
 using Mamavon.Funcs;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +8,9 @@ public class SetInputAction : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
     [SerializeField] InputSystemNameActionData[] inputActionsDatas;
-    [Header("InputAction")][SerializeField] List<InputActionReference> inputActionList = new List<InputActionReference>();
+    [Header("InputAction")][SerializeField] InputActionReference[] inputActionArray;
 
-    private void Start()
+    private void Awake()
     {
         if (playerInput == null)
         {
@@ -22,18 +21,20 @@ public class SetInputAction : MonoBehaviour
 
     private void CompareActions()
     {
+        inputActionArray = new InputActionReference[inputActionsDatas.Length];
+
         foreach (InputAction action in playerInput.actions)
         {
             InputActionReference reference = InputActionReference.Create(action);
-            string inputActionStr = reference.ToString().Debuglog("PlayerInputのAction");
+            string inputActionStr = reference.ToString();
             for (int i = 0; i < inputActionsDatas.Length; i++)
             {
-                string inputActionsDataStr = inputActionsDatas[i].actionReference.ToString().Debuglog("設定されたInputAction");
+                string inputActionsDataStr = inputActionsDatas[i].actionReference.ToString();
 
-                if (!String.Equals(inputActionStr, inputActionsDataStr).Debuglog())
+                if (!String.Equals(inputActionStr, inputActionsDataStr))
                     continue;
 
-                inputActionList.Add(reference);
+                inputActionArray[i] = reference;
             }
         }
     }
@@ -41,17 +42,17 @@ public class SetInputAction : MonoBehaviour
     private void OnEnable()
     {
         "InputActionを有効化します".Debuglog(TextColor.Blue);
-        for (int i = 0; i < inputActionList.Count; i++)
+        for (int i = 0; i < inputActionArray.Length; i++)
         {
-            inputActionsDatas[i].EnableAction(inputActionList[i]);
+            inputActionsDatas[i].EnableAction(playerInput.playerIndex, inputActionArray[i]);
         }
     }
     private void OnDisable()
     {
         "InputActionを無効化します".Debuglog(TextColor.Red);
-        for (int i = 0; i < inputActionList.Count; i++)
+        for (int i = 0; i < inputActionArray.Length; i++)
         {
-            inputActionsDatas[i].DisableAction(inputActionList[i]);
+            inputActionsDatas[i].DisableAction(playerInput.playerIndex, inputActionArray[i]);
         }
     }
     private void OnDestroy()
@@ -59,51 +60,7 @@ public class SetInputAction : MonoBehaviour
         "InputActionを破棄します".Debuglog(TextColor.Black);
         foreach (var data in inputActionsDatas)
         {
-            InputWrapperManager.Instance.DestoryAction(data.actionName);
+            InputWrapperManager.Instance.DestroyAction(playerInput.playerIndex, data.actionName);
         }
     }
 }
-
-//using Mamavon.Funcs;
-//using UnityEngine;
-//using UnityEngine.InputSystem;
-//public class SetInputAction : MonoBehaviour
-//{
-//    [SerializeField] PlayerInput playerInput;
-//    [SerializeField] InputActionReference[] inputActionsDatas;
-//    [Header("InputAction")][SerializeField] InputAction[] actionReference;
-
-//    private void Start()
-//    {
-//        actionReference = new InputAction[inputActionsDatas.Length];
-//        for (int i = 0; i < inputActionsDatas.Length; i++)
-//        {
-//            actionReference[i] = playerInput.actions[inputActionsDatas[i].name];
-//        }
-//    }
-
-//    private void OnEnable()
-//    {
-//        "InputActionを有効化します".Debuglog(TextColor.Blue);
-//        foreach (var data in inputActionsDatas)
-//        {
-//            data.EnableAction();
-//        }
-//    }
-//    private void OnDisable()
-//    {
-//        "InputActionを無効化します".Debuglog(TextColor.Red);
-//        foreach (var data in inputActionsDatas)
-//        {
-//            data.DisableAction();
-//        }
-//    }
-//    private void OnDestroy()
-//    {
-//        "InputActionを破棄します".Debuglog(TextColor.Black);
-//        foreach (var data in inputActionsDatas)
-//        {
-//            InputWrapperManager.Instance.DestoryAction(data.actionName);
-//        }
-//    }
-//}

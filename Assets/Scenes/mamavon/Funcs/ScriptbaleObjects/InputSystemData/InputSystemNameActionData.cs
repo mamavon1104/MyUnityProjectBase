@@ -38,53 +38,53 @@ namespace Mamavon.Data
             { ValueType.Float,typeof(float)},
             { ValueType.Vector2,typeof(Vector2)},
         };
-        public void EnableAction(InputAction action)
+        public void EnableAction(int playerNum, InputAction action)
         {
             var manager = InputWrapperManager.Instance;
             switch (myValueType)
             {
                 case ValueType.Bool:
-                    manager.EnableAction<bool>(actionName, action, triggerOnRelease);
+                    manager.EnableAction<bool>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Unit:
-                    manager.EnableAction<Unit>(actionName, action, triggerOnRelease);
+                    manager.EnableAction<Unit>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Float:
-                    manager.EnableAction<float>(actionName, action, triggerOnRelease);
+                    manager.EnableAction<float>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Vector2:
-                    manager.EnableAction<Vector2>(actionName, action, triggerOnRelease);
+                    manager.EnableAction<Vector2>(playerNum, actionName, action, triggerOnRelease);
                     break;
             }
         }
 
-        public void DisableAction(InputAction action)
+        public void DisableAction(int playerNum, InputAction action)
         {
             var manager = InputWrapperManager.Instance;
             switch (myValueType)
             {
                 case ValueType.Bool:
-                    manager.DisableAction<bool>(actionName, action, triggerOnRelease);
+                    manager.DisableAction<bool>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Unit:
-                    manager.DisableAction<Unit>(actionName, action, triggerOnRelease);
+                    manager.DisableAction<Unit>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Float:
-                    manager.DisableAction<float>(actionName, action, triggerOnRelease);
+                    manager.DisableAction<float>(playerNum, actionName, action, triggerOnRelease);
                     break;
                 case ValueType.Vector2:
-                    manager.DisableAction<Vector2>(actionName, action, triggerOnRelease);
+                    manager.DisableAction<Vector2>(playerNum, actionName, action, triggerOnRelease);
                     break;
             }
         }
-        public IObservable<T> GetObservable<T>(int timeSpan = 10)
+        public IObservable<T> GetObservable<T>(int playerNum, int timeSpan = 10)
         {
             var manager = InputWrapperManager.Instance;
 
             if (typeof(T) != (Type)dic[myValueType])
                 $"指定したValueType{myValueType}と型{typeof(T)}が違います".DebuglogError();
 
-            return manager.GetObservable<T>(actionName).ThrottleFirst(TimeSpan.FromMilliseconds(timeSpan));
+            return manager.GetObservable<T>(playerNum, actionName).ThrottleFirst(TimeSpan.FromMilliseconds(timeSpan));
         }
     }
 #if UNITY_EDITOR

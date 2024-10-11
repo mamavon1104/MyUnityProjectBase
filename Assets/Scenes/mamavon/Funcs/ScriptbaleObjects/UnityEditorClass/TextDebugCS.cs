@@ -1,5 +1,7 @@
 using UnityEngine;
 using Mamavon.Funcs;
+using System;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -19,6 +21,16 @@ namespace Mamavon.Data
         {
             //値が返ってくるので配列に値を追加しながらもちゃんとDebug出来ますよ。
             var a = text.Debuglog(textColor);
+        }
+
+        [ContextMenu("全ての色でDebugLog")]
+        private void DebugAllColor()
+        {
+            TextColor[] colors = (TextColor[])Enum.GetValues(typeof(TextColor));
+            foreach (var color in colors)
+            {
+                text.Debuglog($"Color = {color}", color);
+            }
         }
     }
 #if UNITY_EDITOR

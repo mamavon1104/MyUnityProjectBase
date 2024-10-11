@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6166f0aa9dd3a174ea20154f54ad0db0, type: 3}
   m_Name: DebugTextObjs
   m_EditorClassIdentifier: 
-  textColor: 0
-  text: 
+  textColor: 7
+  text: Text

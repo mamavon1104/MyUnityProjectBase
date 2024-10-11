@@ -1,6 +1,7 @@
 using Mamavon.Data;
 using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovementClass2D : MonoBehaviour
@@ -9,20 +10,24 @@ public class PlayerMovementClass2D : MonoBehaviour
     [SerializeField] private float m_moveSpeed = 10f;
     [SerializeField] private float m_maxSpeed = 10f;
     [SerializeField] private Rigidbody2D _rig;
+
     private float _moveFloat;
     private void Start()
     {
         _rig = GetComponent<Rigidbody2D>();
+        var playerIndex = GetComponent<PlayerInput>().playerIndex;
 
-        m_move.GetObservable<Vector2>().Subscribe(v =>
+        m_move.GetObservable<Vector2>(playerIndex).Subscribe(v =>
         {
             _moveFloat = v.x; //UniRX * PlayerInput
         }).AddTo(this);
 
+        #region InputManager‚ð—˜—p‚µ‚½
         //InputObservableUtility.OnAxisInput("Horizontal").Subscribe(v =>
         //{
         //    _moveFloat = v; 
         //}).AddTo(this);
+        #endregion
     }
     private void Update()
     {

@@ -2,6 +2,7 @@ using Mamavon.Data;
 using Mamavon.Funcs;
 using UniRx;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Mamavon.Code
 {
@@ -20,6 +21,7 @@ namespace Mamavon.Code
         {
             _myT = transform;
             _rig = GetComponent<Rigidbody2D>();
+            var playerIndex = GetComponent<PlayerInput>().playerIndex.Debuglog($"{gameObject}‚ÌIndex : ");
 
             switch (m_groundData)
             {
@@ -34,7 +36,7 @@ namespace Mamavon.Code
                     break;
             }
 
-            m_jump.GetObservable<Unit>().
+            m_jump.GetObservable<Unit>(playerIndex).
                    Where(_ => IsGrounded()).
                    Subscribe(_ =>
                    {
