@@ -41,6 +41,9 @@ namespace Mamavon.Data
         public void EnableAction(int playerNum, InputAction action)
         {
             var manager = InputWrapperManager.Instance;
+
+            (playerNum, actionName, action, triggerOnRelease).Debuglog();
+
             switch (myValueType)
             {
                 case ValueType.Bool:
