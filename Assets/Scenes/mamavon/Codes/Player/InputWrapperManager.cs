@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 //public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
 //{
@@ -66,16 +65,14 @@ using UnityEngine.InputSystem.Utilities;
 
 public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
 {
-    private Dictionary<(int, ReadOnlyArray<InputDevice>), Dictionary<string, object>> playerSubjects =
-        new Dictionary<(int, ReadOnlyArray<InputDevice>), Dictionary<string, object>>();
+    private Dictionary<int, Dictionary<string, object>> playerSubjects = new Dictionary<int, Dictionary<string, object>>();
 
-    public IObservable<T> GetObservable<T>(PlayerInput playerInput, string actionName)
+    public IObservable<T> GetObservable<T>(int playerNumber, string actionName)
     {
-        var playerTaples = (playerInput.playerIndex, playerInput.devices);
-        if (!playerSubjects.TryGetValue(playerTaples, out var subjects))
+        if (!playerSubjects.TryGetValue(playerNumber, out var subjects))
         {
             subjects = new Dictionary<string, object>();
-            playerSubjects[playerTaples] = subjects;
+            playerSubjects[playerNumber] = subjects;
         }
 
         if (!subjects.TryGetValue(actionName, out var subject))
@@ -86,52 +83,50 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
         return (subject as Subject<T>).AsObservable();
     }
 
-    public void EnableAction<T>(PlayerInput playerInput, InputAction action, InputSystemNameActionData data, List<InputDevice> inputDevices) where T : struct
+    public void EnableAction<T>(InputSystemNameActionData data, List<InputDevice> inputDevices) where T : struct
     {
-        DisableAction<T>(playerInput.playerIndex, data.actionName, action, data.triggerOnRelease);
+        DisableAction<T>(data.playerNumberonName, data.action, data.invokeOnRelease);
 
         action.Enable();
-        action.performed += ctx => InvokeSubject<T>(playerInput, data.actionName, ctx);
+        action.performed += ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
 
-        if (data.triggerOnRelease)
-            action.canceled += ctx => InvokeSubject<T>(playerInput, data.actionName, ctx);
+        if (invokeOnRelease)
+            action.canceled += ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
     }
 
     public void DisableAction<T>(int playerNumber, string actionName, InputAction action, bool invokeOnRelease) where T : struct
     {
-        //if (playerSubjects.TryGetValue(playerInput, out var subjects) && subjects.ContainsKey(actionName))
-        //{
-        //    action.performed -= ctx => InvokeSubject<T>(playerInput, actionName, ctx);
-        //    if (invokeOnRelease)
-        //        action.canceled -= ctx => InvokeSubject<T>(playerInput, actionName, ctx);
-        //}
-        //action.Disable();
+        if (playerSubjects.TryGetValue(playerNumber, out var subjects) && subjects.ContainsKey(actionName))
+        {
+            action.performed -= ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
+            if (invokeOnRelease)
+                action.canceled -= ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
+        }
+        action.Disable();
     }
 
     public void DestroyAction(int playerNumber, string actionName)
     {
-        //if (playerSubjects.TryGetValue(playerInput, out var subjects))
-        //{
-        //    if (subjects.TryGetValue(actionName, out var subject))
-        //    {
-        //        // アクション名に関連するSubjectを破棄
-        //        (subject as IDisposable)?.Dispose();
-        //        subjects.Remove(actionName);
-        //    }
+        if (playerSubjects.TryGetValue(playerNumber, out var subjects))
+        {
+            if (subjects.TryGetValue(actionName, out var subject))
+            {
+                // アクション名に関連するSubjectを破棄
+                (subject as IDisposable)?.Dispose();
+                subjects.Remove(actionName);
+            }
 
-        //    // プレイヤーの全アクションが削除された場合、プレイヤーエントリも削除
-        //    if (subjects.Count == 0)
-        //    {
-        //        playerSubjects.Remove(playerInput);
-        //    }
-        //}
+            // プレイヤーの全アクションが削除された場合、プレイヤーエントリも削除
+            if (subjects.Count == 0)
+            {
+                playerSubjects.Remove(playerNumber);
+            }
+        }
     }
 
-    private void InvokeSubject<T>(PlayerInput playerInput, string actionName, InputAction.CallbackContext ctx) where T : struct
+    private void InvokeSubject<T>(int playerNumber, string actionName, InputAction.CallbackContext ctx) where T : struct
     {
-        var playerTaples = (playerInput.playerIndex, playerInput.devices);
-
-        if (playerSubjects.TryGetValue(playerTaples, out var subjects) && subjects.TryGetValue(actionName, out var subject))
+        if (playerSubjects.TryGetValue(playerNumber, out var subjects) && subjects.TryGetValue(actionName, out var subject))
         {
             if (subject is Subject<Unit> unitSubject)
                 unitSubject.OnNext(Unit.Default);

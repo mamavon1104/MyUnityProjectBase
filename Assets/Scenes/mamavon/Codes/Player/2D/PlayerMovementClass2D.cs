@@ -15,9 +15,9 @@ public class PlayerMovementClass2D : MonoBehaviour
     private void Start()
     {
         _rig = GetComponent<Rigidbody2D>();
-        var playerInput = GetComponent<PlayerInput>();
+        var playerIndex = GetComponent<PlayerInput>().playerIndex;
 
-        m_move.GetObservable<Vector2>(playerInput).Subscribe(v =>
+        m_move.GetObservable<Vector2>(playerIndex).Subscribe(v =>
         {
             _moveFloat = v.x; //UniRX * PlayerInput
         }).AddTo(this);
