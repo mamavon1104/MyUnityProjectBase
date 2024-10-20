@@ -21,7 +21,7 @@ namespace Mamavon.Code
         {
             _myT = transform;
             _rig = GetComponent<Rigidbody2D>();
-            var playerIndex = GetComponent<PlayerInput>().playerIndex.Debuglog($"{gameObject}‚ÌIndex : ");
+            var playerInput = GetComponent<PlayerInput>().Debuglog($"{gameObject}‚ÌIndex : ");
 
             switch (m_groundData)
             {
@@ -36,7 +36,7 @@ namespace Mamavon.Code
                     break;
             }
 
-            m_jump.GetObservable<Unit>(playerIndex).
+            m_jump.GetObservable<Unit>(playerInput).
                    Where(_ => IsGrounded()).
                    Subscribe(_ =>
                    {

@@ -17,7 +17,7 @@ public class GetInputDevice : MonoBehaviour
         //    return;
 
         string totalStr = $"{playerInput.playerIndex}のコントローラーはこちら : \n";
-        foreach (var item in playerInput.devices)
+        foreach (UnityEngine.InputSystem.InputDevice item in playerInput.devices)
         {
             totalStr += $"{item}\n";
         }

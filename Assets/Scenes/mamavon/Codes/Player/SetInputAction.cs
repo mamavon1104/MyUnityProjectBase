@@ -1,5 +1,6 @@
 ﻿using Mamavon.Data;
 using Mamavon.Funcs;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +10,15 @@ public class SetInputAction : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     [SerializeField] InputSystemNameActionData[] inputActionsDatas;
     [Header("InputAction")][SerializeField] InputActionReference[] inputActionArray;
+    [SerializeField] List<InputDevice> inputDevice = new List<InputDevice>();
 
     private void CompareActions()
     {
-        if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+        foreach (var device in playerInput.devices)
+        {
+            inputDevice.Add(device);
+        }
+
         inputActionArray = new InputActionReference[inputActionsDatas.Length];
 
         for (int i = 0; i < inputActionsDatas.Length; i++)
@@ -50,7 +56,7 @@ public class SetInputAction : MonoBehaviour
         "InputActionを有効化します".Debuglog(TextColor.Blue);
         for (int i = 0; i < inputActionArray.Length; i++)
         {
-            inputActionsDatas[i].EnableAction(playerInput.playerIndex, inputActionArray[i]);
+            inputActionsDatas[i].EnableAction(playerInput, inputActionArray[i], inputDevice);
         }
     }
     private void OnDisable()
