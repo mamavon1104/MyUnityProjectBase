@@ -20,10 +20,10 @@ namespace Mamavon.Data
     [Serializable]
     public class InputSystemNameActionData : ScriptableObject
     {
-        [Header("Actionの名前")] public string actionName;
-        [Header("InputAction")] public InputActionReference actionReference;
-        [Header("ValueType")] public ValueType myValueType;
-        [Header("離したときもイベント発行するか")] public bool triggerOnRelease;
+        [Header("Actionの名前")] public readonly string actionName;
+        [Header("InputAction")] public readonly InputActionReference actionReference;
+        [Header("ValueType")] public readonly ValueType myValueType;
+        [Header("離したときもイベント発行するか")] public readonlybool triggerOnRelease;
         public enum ValueType
         {
             Bool,
@@ -38,7 +38,7 @@ namespace Mamavon.Data
             { ValueType.Float,typeof(float)},
             { ValueType.Vector2,typeof(Vector2)},
         };
-        public void EnableAction(int playerNum, InputAction action)
+        public void EnableAction(int playerNum, InputAction action, List<InputDevice> inputDevice)
         {
             var manager = InputWrapperManager.Instance;
 

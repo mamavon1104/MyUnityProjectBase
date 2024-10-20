@@ -1,9 +1,11 @@
+#if UNITY_EDITOR
 using Mamavon.Funcs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GetInputDevice : MonoBehaviour
 {
+    [SerializeField] PlayerInput playerInput;
     void Start()
     {
         DebugInputDevice();
@@ -11,15 +13,16 @@ public class GetInputDevice : MonoBehaviour
     [ContextMenu("デバッグする(InputDeviceを)")]
     void DebugInputDevice()
     {
-        var playerInput = GetComponent<PlayerInput>();
-        if (!playerInput.user.valid) //これで有効か判定。 
-        {
-            return;
-        }
+        //if (!playerInput.user.valid) //これで有効か判定。 
+        //    return;
 
+        string totalStr = $"{playerInput.playerIndex}のコントローラーはこちら : \n";
         foreach (var item in playerInput.devices)
         {
-            item.Debuglog(playerInput.playerIndex.ToString(), TextColor.Black);
+            totalStr += $"{item}\n";
         }
+        totalStr.Debuglog(playerInput.playerIndex.ToString(), TextColor.Black);
     }
 }
+
+#endif

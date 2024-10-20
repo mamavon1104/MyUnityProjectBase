@@ -441,7 +441,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T Debuglog<T>(this T value, TextColor color = TextColor.White)
         {
-            Debug.Log($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            Debug.Log($"{GetColorString(color)} {typeof(T).Name}: {value} {GetColorStringEnd(color)}");
             return value;
         }
         /// <summary>
@@ -450,7 +450,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T Debuglog<T>(this T value, string str, TextColor color = TextColor.White)
         {
-            Debug.Log($"{str} : {GetColorString(color)}{value}。 </color>");
+            Debug.Log($"{str} : {GetColorString(color)}{value}。 {GetColorStringEnd(color)}");
             return value;
         }
 
@@ -461,7 +461,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T DebuglogWarning<T>(this T value, TextColor color = TextColor.Yellow)
         {
-            Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            Debug.LogWarning($"{GetColorString(color)} {typeof(T).Name}: {value} {GetColorStringEnd(color)}");
             return value;
         }
         /// <summary>
@@ -470,7 +470,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T DebuglogWarning<T>(this T value, string str, TextColor color = TextColor.Yellow)
         {
-            Debug.LogWarning($"{str} : {GetColorString(color)}{value}。 </color>");
+            Debug.LogWarning($"{str} : {GetColorString(color)}{value}。 {GetColorStringEnd(color)}");
             return value;
         }
 
@@ -480,7 +480,7 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T DebuglogError<T>(this T value, TextColor color = TextColor.Red)
         {
-            Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} </color>");
+            Debug.LogError($"{GetColorString(color)} {typeof(T).Name}: {value} {GetColorStringEnd(color)}");
             return value;
         }
         /// <summary>
@@ -489,14 +489,13 @@ namespace Mamavon.Funcs
         /// </summary>
         public static T DebuglogError<T>(this T value, string str, TextColor color = TextColor.Red)
         {
-            Debug.LogError($"{str} : {GetColorString(color)}{value}。 </color>");
+            Debug.LogError($"{str} : {GetColorString(color)}{value}。 {GetColorStringEnd(color)}");
             return value;
         }
 
         /// <summary>
-        /// 色を付けるときの<color = ~~~>を返す</color>
+        /// 色を付けるときの<color = ~~~>を返す
         /// </summary>
-        /// </returns>
         private static string GetColorString(TextColor color)
         {
             return color == TextColor.White ? "" : $"<color=#{ConvertEnumToColorCode(color)}>";
@@ -507,13 +506,13 @@ namespace Mamavon.Funcs
         private static string ConvertEnumToColorCode(TextColor textColor) //https://nekosuko.jp/1674/ のサイトを参考
         {
             return ColorUtility.ToHtmlStringRGBA(textColorsDic[textColor]);
-
-            //Color col = textColorsDic[textColor];
-            //string colorCode = ColorUtility.ToHtmlStringRGBA(col);
-            //Debug.Log(col);
-            //Debug.Log(colorCode);
-            //return textColor.ToString().ToLower(); 過去の産物
         }
-
+        /// <summary>
+        /// 色を付けるときの</color>を返す
+        /// </summary>
+        private static string GetColorStringEnd(TextColor color)
+        {
+            return color == TextColor.White ? "" : "</color>";
+        }
     }
 }

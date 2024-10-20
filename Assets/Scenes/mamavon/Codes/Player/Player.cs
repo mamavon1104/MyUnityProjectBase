@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         var manager = InputWrapperManager.Instance;
-        move.GetObservable<Vector2>(0).Subscribe(v => Move(v));
-        jump.GetObservable<bool>(0).Subscribe(_ => Jump());
+        move.GetObservable<Vector2>(0).Subscribe(v => Move(v)).AddTo(this);
+        jump.GetObservable<bool>(0).Subscribe(_ => Jump()).AddTo(this);
     }
 
     private void Move(Vector2 v) { $"{v}".Debuglog("Move"); }

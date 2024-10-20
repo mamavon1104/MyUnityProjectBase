@@ -237,10 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
   inputActionsDatas:
-  - {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
   - {fileID: 11400000, guid: 2a210af3a56c8d747b606faad0b23eb2, type: 2}
   - {fileID: 11400000, guid: f598345e7fc903241a9a8534b94d0e66, type: 2}
-  inputActionList: []
+  - {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
+  inputActionArray: []
 --- !u!114 &7534150452071170291
 MonoBehaviour:
   m_ObjectHideFlags: 0

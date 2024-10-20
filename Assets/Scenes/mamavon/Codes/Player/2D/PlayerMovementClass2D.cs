@@ -29,10 +29,10 @@ public class PlayerMovementClass2D : MonoBehaviour
         //}).AddTo(this);
         #endregion
     }
-    private void Update()
-    {
-        //_moveFloat = Input.GetAxisRaw("Horizontal");
-    }
+    //private void Update()
+    //{
+    //_moveFloat = Input.GetAxisRaw("Horizontal");
+    //}
     private void FixedUpdate()
     {
         if (_rig.velocity.magnitude < m_maxSpeed)

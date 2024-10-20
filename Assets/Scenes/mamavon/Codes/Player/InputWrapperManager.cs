@@ -1,3 +1,4 @@
+using Mamavon.Data;
 using Mamavon.Useful;
 using System;
 using System.Collections.Generic;
@@ -82,9 +83,9 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
         return (subject as Subject<T>).AsObservable();
     }
 
-    public void EnableAction<T>(int playerNumber, string actionName, InputAction action, bool invokeOnRelease) where T : struct
+    public void EnableAction<T>(InputSystemNameActionData data, List<InputDevice> inputDevices) where T : struct
     {
-        DisableAction<T>(playerNumber, actionName, action, invokeOnRelease);
+        DisableAction<T>(data.playerNumberonName, data.action, data.invokeOnRelease);
 
         action.Enable();
         action.performed += ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
@@ -108,7 +109,18 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
     {
         if (playerSubjects.TryGetValue(playerNumber, out var subjects))
         {
-            subjects.Remove(actionName);
+            if (subjects.TryGetValue(actionName, out var subject))
+            {
+                // アクション名に関連するSubjectを破棄
+                (subject as IDisposable)?.Dispose();
+                subjects.Remove(actionName);
+            }
+
+            // プレイヤーの全アクションが削除された場合、プレイヤーエントリも削除
+            if (subjects.Count == 0)
+            {
+                playerSubjects.Remove(playerNumber);
+            }
         }
     }
 

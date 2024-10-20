@@ -47,7 +47,6 @@ namespace Mamavon.Useful
         {
             if (_instance is not null && this != _instance)
             {
-                Debug.LogError($"インスタンスがもうあるよ！", this);
                 Destroy(this);
             }
         }
