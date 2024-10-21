@@ -8,22 +8,24 @@ public class SetInputAction : MonoBehaviour
 {
     [SerializeField] PlayerInput playerInput;
     [SerializeField] InputSystemNameActionData[] inputActionsDatas;
-    [Header("InputAction")][SerializeField] InputActionReference[] inputActionArray;
+    [Header("InputAction")][SerializeField] InputAction[] inputActionArray;
 
     private void CompareActions()
     {
         if (playerInput == null) playerInput = GetComponent<PlayerInput>();
-        inputActionArray = new InputActionReference[inputActionsDatas.Length];
+        inputActionArray = new InputAction[inputActionsDatas.Length];
 
         for (int i = 0; i < inputActionsDatas.Length; i++)
         {
             InputAction actionData = inputActionsDatas[i].actionReference.action;
+            actionData.name.Debuglog();
             foreach (InputAction playerInputAction in playerInput.actions)
             {
                 if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
                     continue;
 
-                inputActionArray[i] = InputActionReference.Create(playerInput.actions[inputActionsDatas[i].actionReference.action.name]);
+                inputActionArray[i] = playerInput.actions[actionData.name];
+                inputActionArray[i].name.Debuglog(TextColor.Brown);
                 break;
             }
         }
@@ -64,9 +66,9 @@ public class SetInputAction : MonoBehaviour
     private void OnDestroy()
     {
         "InputActionを破棄します".Debuglog(TextColor.Black);
-        foreach (var data in inputActionsDatas)
+        foreach (var act in inputActionArray)
         {
-            InputWrapperManager.Instance.DestroyAction(playerInput.playerIndex, data.actionName);
+            InputWrapperManager.Instance.DestroyAction(playerInput.playerIndex, act.name);
         }
     }
 }
