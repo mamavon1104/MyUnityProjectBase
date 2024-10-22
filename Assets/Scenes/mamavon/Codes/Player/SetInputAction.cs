@@ -1,5 +1,6 @@
 ﻿using Mamavon.Data;
 using Mamavon.Funcs;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,20 +16,105 @@ public class SetInputAction : MonoBehaviour
         if (playerInput == null) playerInput = GetComponent<PlayerInput>();
         inputActionArray = new InputAction[inputActionsDatas.Length];
 
-        for (int i = 0; i < inputActionsDatas.Length; i++)
-        {
-            InputAction actionData = inputActionsDatas[i].actionReference.action;
-            actionData.name.Debuglog();
-            foreach (InputAction playerInputAction in playerInput.actions)
-            {
-                if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
-                    continue;
 
-                inputActionArray[i] = playerInput.actions[actionData.name];
-                inputActionArray[i].name.Debuglog(TextColor.Brown);
-                break;
+        System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+        string test = "";
+        int num = 100;
+        for (int i = 0; i < num; i++)
+        {
+            stopwatch.Start();
+
+            for (int j = 0; j < inputActionsDatas.Length; j++)
+            {
+                InputAction actionData = inputActionsDatas[j].actionReference.action;
+                actionData.name.Debuglog();
+                foreach (InputAction playerInputAction in playerInput.actions)
+                {
+                    if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
+                        continue;
+
+                    inputActionArray[j] = playerInput.actions[actionData.name];
+                    inputActionArray[j].name.Debuglog(TextColor.Brown);
+                    break;
+                }
             }
+
+            stopwatch.Stop();
+            TimeSpan elapsed = stopwatch.Elapsed;
+            double milliseconds = elapsed.TotalMilliseconds;
+            test += $"{i + 1}回目の実行時間 : {milliseconds}ミリ秒 \n";
+            stopwatch.Reset();
         }
+        test.Debuglog(TextColor.Red);
+        test = "";
+
+        for (int i = 0; i < num; i++)
+        {
+            stopwatch.Start();
+
+
+            for (int j = 0; j < inputActionsDatas.Length; j++)
+            {
+                InputAction actionData = inputActionsDatas[j].actionReference.action;
+                foreach (InputAction playerInputAction in playerInput.actions)
+                {
+                    if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
+                        continue;
+
+                    inputActionArray[j] = InputActionReference.Create(playerInput.actions[inputActionsDatas[j].actionReference.action.name]);
+                    break;
+                }
+            }
+            stopwatch.Stop();
+            TimeSpan elapsed = stopwatch.Elapsed;
+            double milliseconds = elapsed.TotalMilliseconds;
+            test += $"{i + 1}回目の実行時間 : {milliseconds}ミリ秒 \n";
+            stopwatch.Reset();
+        }
+        test.Debuglog(TextColor.Blue);
+        test = "";
+        for (int i = 0; i < num; i++)
+        {
+            stopwatch.Start();
+
+            foreach (InputAction action in playerInput.actions)
+            {
+                InputActionReference reference = InputActionReference.Create(action).Debuglog(playerInput.playerIndex.ToString(), TextColor.Blue);
+                string inputActionStr = reference.ToString();
+                for (int j = 0; j < inputActionsDatas.Length; j++)
+                {
+                    string inputActionsDataStr = inputActionsDatas[j].actionReference.ToString().Debuglog(playerInput.playerIndex.ToString(), TextColor.Red);
+
+                    if (!String.Equals(inputActionStr, inputActionsDataStr))
+                        continue;
+
+                    inputActionArray[j] = reference;
+                }
+            }
+            stopwatch.Stop();
+            TimeSpan elapsed = stopwatch.Elapsed;
+            double milliseconds = elapsed.TotalMilliseconds;
+            test += $"{i + 1}回目の実行時間 : {milliseconds}ミリ秒 \n";
+            stopwatch.Reset();
+        }
+        test.Debuglog(TextColor.Green);
+        test = "";
+
+
+        //for (int i = 0; i < inputActionsDatas.Length; i++)
+        //{
+        //    InputAction actionData = inputActionsDatas[i].actionReference.action;
+        //    actionData.name.Debuglog();
+        //    foreach (InputAction playerInputAction in playerInput.actions)
+        //    {
+        //        if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
+        //            continue;
+
+        //        inputActionArray[i] = playerInput.actions[actionData.name];
+        //        inputActionArray[i].name.Debuglog(TextColor.Brown);
+        //        break;
+        //    }
+        //}
 
         //for (int i = 0; i < inputActionsDatas.Length; i++)
         //{
