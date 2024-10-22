@@ -30,6 +30,19 @@ public class SetInputAction : MonoBehaviour
             }
         }
 
+        //for (int i = 0; i < inputActionsDatas.Length; i++)
+        //{
+        //    InputAction actionData = inputActionsDatas[i].actionReference.action;
+        //    foreach (InputAction playerInputAction in playerInput.actions)
+        //    {
+        //        if (playerInputAction.name != actionData.name || playerInputAction.actionMap?.name != actionData.actionMap?.name)
+        //            continue;
+
+        //        inputActionArray[i] = InputActionReference.Create(playerInput.actions[inputActionsDatas[i].actionReference.action.name]);
+        //        break;
+        //    }
+        //}
+
         //foreach (InputAction action in playerInput.actions)
         //{
         //    InputActionReference reference = InputActionReference.Create(action).Debuglog(playerInput.playerIndex.ToString(), TextColor.Blue);
@@ -52,7 +65,7 @@ public class SetInputAction : MonoBehaviour
         "InputActionを有効化します".Debuglog(TextColor.Blue);
         for (int i = 0; i < inputActionArray.Length; i++)
         {
-            inputActionsDatas[i].EnableAction(playerInput.playerIndex, inputActionArray[i]);
+            inputActionsDatas[i].EnableAction(playerInput, inputActionArray[i]);
         }
     }
     private void OnDisable()
@@ -60,7 +73,7 @@ public class SetInputAction : MonoBehaviour
         "InputActionを無効化します".Debuglog(TextColor.Red);
         for (int i = 0; i < inputActionArray.Length; i++)
         {
-            inputActionsDatas[i].DisableAction(playerInput.playerIndex, inputActionArray[i]);
+            inputActionsDatas[i].DisableAction(playerInput, inputActionArray[i]);
         }
     }
     private void OnDestroy()

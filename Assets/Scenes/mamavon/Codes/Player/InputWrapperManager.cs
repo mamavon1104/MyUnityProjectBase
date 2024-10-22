@@ -1,8 +1,10 @@
 using Mamavon.Data;
+using Mamavon.Funcs;
 using Mamavon.Useful;
 using System;
 using System.Collections.Generic;
 using UniRx;
+using UnityEditor;
 using UnityEngine.InputSystem;
 
 //public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
@@ -79,28 +81,30 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
         {
             subject = new Subject<T>();
             subjects[actionName] = subject;
+            (playerNumber, actionName, subject).Debuglog(TextColor.GreenYellow);
         }
+
         return (subject as Subject<T>).AsObservable();
     }
 
-    public void EnableAction<T>(InputSystemNameActionData data, List<InputDevice> inputDevices) where T : struct
+    public void EnableAction<T>(PlayerInput playerIndex, InputAction action, InputSystemNameActionData data) where T : struct
     {
-        DisableAction<T>(data.playerNumberonName, data.action, data.invokeOnRelease);
+        DisableAction<T>(playerIndex, action, data);
 
         action.Enable();
-        action.performed += ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
+        action.performed += ctx => InvokeSubject<T>(playerIndex, data.actionReference.name, ctx);
 
-        if (invokeOnRelease)
-            action.canceled += ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
+        if (data.triggerOnRelease)
+            action.canceled += ctx => InvokeSubject<T>(playerIndex, data.actionReference.name, ctx);
     }
 
-    public void DisableAction<T>(int playerNumber, string actionName, InputAction action, bool invokeOnRelease) where T : struct
+    public void DisableAction<T>(PlayerInput playerInput, InputAction action, InputSystemNameActionData data) where T : struct
     {
-        if (playerSubjects.TryGetValue(playerNumber, out var subjects) && subjects.ContainsKey(actionName))
+        if (playerSubjects.TryGetValue(playerInput.playerIndex, out var subjects) && subjects.ContainsKey(data.actionReference.name))
         {
-            action.performed -= ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
-            if (invokeOnRelease)
-                action.canceled -= ctx => InvokeSubject<T>(playerNumber, actionName, ctx);
+            action.performed -= ctx => InvokeSubject<T>(playerInput, data.actionReference.name, ctx);
+            if (data.triggerOnRelease)
+                action.canceled -= ctx => InvokeSubject<T>(playerInput, data.actionReference.name, ctx);
         }
         action.Disable();
     }
@@ -124,9 +128,12 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
         }
     }
 
-    private void InvokeSubject<T>(int playerNumber, string actionName, InputAction.CallbackContext ctx) where T : struct
+    private void InvokeSubject<T>(PlayerInput playerInput, string actionName, InputAction.CallbackContext ctx) where T : struct
     {
-        if (playerSubjects.TryGetValue(playerNumber, out var subjects) && subjects.TryGetValue(actionName, out var subject))
+        if (ArrayUtility.Contains(playerInput.devices.ToArray(), ctx.control.device))
+            return;
+
+        if (playerSubjects.TryGetValue(playerInput.playerIndex, out var subjects) && subjects.TryGetValue(actionName, out var subject))
         {
             if (subject is Subject<Unit> unitSubject)
                 unitSubject.OnNext(Unit.Default);
