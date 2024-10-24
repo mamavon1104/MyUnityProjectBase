@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/*
+ * 私のほぼ師匠が制作されていたものを参考にシーン読み込みコマンド
+*/
 
 [Serializable]
 public class CommandScenePair

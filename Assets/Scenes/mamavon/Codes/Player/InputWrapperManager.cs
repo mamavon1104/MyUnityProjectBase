@@ -4,7 +4,6 @@ using Mamavon.Useful;
 using System;
 using System.Collections.Generic;
 using UniRx;
-using UnityEditor;
 using UnityEngine.InputSystem;
 
 //public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
@@ -130,8 +129,8 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
 
     private void InvokeSubject<T>(PlayerInput playerInput, string actionName, InputAction.CallbackContext ctx) where T : struct
     {
-        if (ArrayUtility.Contains(playerInput.devices.ToArray(), ctx.control.device))
-            return;
+        //if (!ArrayUtility.Contains(playerInput.devices.ToArray(), ctx.control.device))
+        //    return;
 
         if (playerSubjects.TryGetValue(playerInput.playerIndex, out var subjects) && subjects.TryGetValue(actionName, out var subject))
         {

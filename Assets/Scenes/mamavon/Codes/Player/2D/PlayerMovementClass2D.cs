@@ -1,4 +1,5 @@
 using Mamavon.Data;
+using Mamavon.Funcs;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,7 +18,7 @@ public class PlayerMovementClass2D : MonoBehaviour
         _rig = GetComponent<Rigidbody2D>();
         var playerIndex = GetComponent<PlayerInput>().playerIndex;
 
-        m_move.GetObservable<Vector2>(playerIndex).Subscribe(v =>
+        m_move.GetObservable<Vector2>(playerIndex.Debuglog()).Subscribe(v =>
         {
             _moveFloat = v.x; //UniRX * PlayerInput
         }).AddTo(this);
@@ -31,7 +32,7 @@ public class PlayerMovementClass2D : MonoBehaviour
     }
     //private void Update()
     //{
-    //_moveFloat = Input.GetAxisRaw("Horizontal");
+    //  _moveFloat = Input.GetAxisRaw("Horizontal");
     //}
     private void FixedUpdate()
     {

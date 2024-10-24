@@ -3,6 +3,10 @@ using System;
 using UniRx;
 using UnityEngine;
 
+/*
+ * 私のほぼ師匠が制作されていたものを参考にInputをIObservableのKeyCodeを待って
+ * 入力終了時にActionにkeycodeを渡し、Actionで実行する。
+*/
 namespace Mamavon.Useful
 {
     public class SecretCommandsManager : SingletonMonoBehaviour<SecretCommandsManager>

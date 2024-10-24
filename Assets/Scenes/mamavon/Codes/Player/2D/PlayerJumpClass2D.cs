@@ -46,6 +46,7 @@ namespace Mamavon.Code
 
         public void Jump(float jumpForce)
         {
+            "ƒWƒƒƒ“ƒvÀs".Debuglog();
             _rig.velocity = new Vector2(_rig.velocity.x, jumpForce);
         }
 

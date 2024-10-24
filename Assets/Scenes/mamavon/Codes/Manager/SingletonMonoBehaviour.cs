@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/*
+ * „‚Ì‚Ù‚Út ‚ª§ì‚³‚ê‚Ä‚¢‚½‚à‚ÌB
+ * ‚±‚ÌSingleton‚Ìì‚è•û‚ÅMonoBehaviour‚Í‚¿‚ÆAŒ«‚·‚¬‚é‚ÈB
+ */
 namespace Mamavon.Useful
 {
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour
