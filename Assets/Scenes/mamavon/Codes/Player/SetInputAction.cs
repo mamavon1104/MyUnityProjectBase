@@ -3,65 +3,66 @@ using Mamavon.Funcs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
-public class SetInputAction : MonoBehaviour
+namespace Mamavon.Code
 {
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] InputSystemNameActionData[] inputActionsDatas;
-    [Header("InputAction")][SerializeField] InputAction[] inputActionArray;
-
-    private void Awake()
+    public class SetInputAction : MonoBehaviour
     {
-        CompareActions();
-        "InputActionをAwakeで有効化します".Debuglog(TextColor.Blue);
-        for (int i = 0; i < inputActionArray.Length; i++)
-        {
-            inputActionsDatas[i].EnableAction(playerInput, inputActionArray[i]);
-        }
-    }
-    private void CompareActions()
-    {
-        if (playerInput == null) playerInput = GetComponent<PlayerInput>();
-        inputActionArray = new InputAction[inputActionsDatas.Length];
+        [SerializeField] PlayerInput playerInput;
+        [SerializeField] InputSystemNameActionData[] inputActionsDatas;
+        [Header("InputAction")][SerializeField] InputAction[] inputActionArray;
 
-
-        for (int i = 0; i < inputActionsDatas.Length; i++)
+        private void CompareActions()
         {
-            InputAction action = inputActionsDatas[i].actionReference.action;
-            foreach (InputAction playerInputAction in playerInput.actions)
+            if (playerInput == null) playerInput = GetComponent<PlayerInput>();
+            inputActionArray = new InputAction[inputActionsDatas.Length];
+
+            for (int i = 0; i < inputActionsDatas.Length; i++)
             {
-                if (playerInputAction.name != action.name || playerInputAction.actionMap?.name != action.actionMap?.name)
-                    continue;
+                InputAction action = inputActionsDatas[i].actionReference.action;
+                foreach (InputAction playerInputAction in playerInput.actions)
+                {
+                    if (playerInputAction.name != action.name || playerInputAction.actionMap?.name != action.actionMap?.name)
+                        continue;
 
-                inputActionArray[i] = InputActionReference.Create(playerInput.actions[action.name]);
-                break;
+                    inputActionArray[i] = InputActionReference.Create(playerInput.actions[action.name]);
+                    break;
+                }
             }
         }
-    }
 
-    private void OnEnable()
-    {
-        CompareActions();
-        "InputActionをEnabledで再有効化します".Debuglog(TextColor.Blue);
-        for (int i = 0; i < inputActionArray.Length; i++)
+        private void OnEnable()
         {
-            inputActionsDatas[i].EnableAction(playerInput, inputActionArray[i]);
+            "InputActionをEnabledで有効化します".Debuglog(TextColor.Blue);
+            CompareActions();
+            EnabledActions();
         }
-    }
-    private void OnDisable()
-    {
-        "InputActionを無効化します".Debuglog(TextColor.Red);
-        for (int i = 0; i < inputActionArray.Length; i++)
+        /// <summary>
+        /// ActionsをUniRxで待てるように設定します。
+        /// もう設定されている場合は上書きをする為何度読んでも大丈夫
+        ///
+        /// </summary>
+        public void EnabledActions()
         {
-            inputActionsDatas[i].DisableAction(playerInput, inputActionArray[i]);
+            for (int i = 0; i < inputActionArray.Length; i++)
+            {
+                inputActionsDatas[i].EnableAction(playerInput, inputActionArray[i]);
+            }
         }
-    }
-    private void OnDestroy()
-    {
-        "InputActionを破棄します".Debuglog(TextColor.Black);
-        foreach (var act in inputActionArray)
+        private void OnDisable()
         {
-            InputWrapperManager.Instance.DestroyAction(playerInput.playerIndex, act.name);
+            "InputActionを無効化します".Debuglog(TextColor.Red);
+            for (int i = 0; i < inputActionArray.Length; i++)
+            {
+                inputActionsDatas[i].DisableAction(playerInput, inputActionArray[i]);
+            }
+        }
+        private void OnDestroy()
+        {
+            "InputActionを破棄します".Debuglog(TextColor.Black);
+            foreach (var act in inputActionArray)
+            {
+                InputWrapperManager.Instance.DestroyAction(playerInput.playerIndex, act.name);
+            }
         }
     }
 }

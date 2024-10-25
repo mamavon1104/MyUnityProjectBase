@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 5855614020786886654}
   - component: {fileID: 9026334829748137433}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DebugPlayerDataObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5855614020786886654
 Transform:
   m_ObjectHideFlags: 0
@@ -59,10 +59,10 @@ GameObject:
   - component: {fileID: 1163193663465487780}
   - component: {fileID: 5171298309862803336}
   - component: {fileID: 3573366718849505490}
-  - component: {fileID: 5709384462801575811}
   - component: {fileID: 3315575354155496637}
-  - component: {fileID: 3397476405169095695}
+  - component: {fileID: 5709384462801575811}
   - component: {fileID: 7534150452071170291}
+  - component: {fileID: 2297671453374168722}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -242,6 +242,19 @@ MonoBehaviour:
   _rig: {fileID: 275821731199717779}
   m_jumpForce: 10
   m_groundData: {fileID: 11400000, guid: 466a05c16b70df844a8a9ea0273aedb7, type: 2}
+--- !u!114 &3315575354155496637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628184109137554489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afaf741710b1ba147aed5326fefec2d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pause: {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
 --- !u!114 &5709384462801575811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,37 +269,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocityCS:
     _velocity: {x: 0, y: 0}
---- !u!114 &3315575354155496637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6628184109137554489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afaf741710b1ba147aed5326fefec2d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pause: {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
---- !u!114 &3397476405169095695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6628184109137554489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3984cab5dc692fa4eaf2faec4f827577, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 7534150452071170291}
-  inputActionsDatas:
-  - {fileID: 11400000, guid: 2a210af3a56c8d747b606faad0b23eb2, type: 2}
-  - {fileID: 11400000, guid: f598345e7fc903241a9a8534b94d0e66, type: 2}
-  - {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
-  inputActionArray: []
 --- !u!114 &7534150452071170291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,3 +299,45 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2297671453374168722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6628184109137554489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3984cab5dc692fa4eaf2faec4f827577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 7534150452071170291}
+  inputActionsDatas:
+  - {fileID: 11400000, guid: 2a210af3a56c8d747b606faad0b23eb2, type: 2}
+  - {fileID: 11400000, guid: f598345e7fc903241a9a8534b94d0e66, type: 2}
+  - {fileID: 11400000, guid: 9930372fcd6d56e41ba9188d570206c5, type: 2}
+  inputActionArray:
+  - m_Name: Jump
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: be5434d9-d585-4354-aaf6-c72a2da9e642
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  - m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: Vector2
+    m_Id: 33ed0064-0598-40d7-8631-af77f29a9ae9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 1
+  - m_Name: Pause
+    m_Type: 1
+    m_ExpectedControlType: 
+    m_Id: 1bf26375-d827-4d1f-ac82-e8d2b300b6c4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0

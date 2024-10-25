@@ -1,3 +1,4 @@
+using Mamavon.Funcs;
 using UnityEngine;
 
 namespace Mamavon.Data
@@ -19,51 +20,64 @@ namespace Mamavon.Data
         /// プレイヤーのオブジェクトが地面に接しているかどうかをチェックします。
         /// BoxCast2Dを使用しています
         /// </summary>
-        /// <param name="obj">チェックするTransformオブジェクト</param>
+        /// <param name="player">チェックするTransformオブジェクト</param>
         /// <param name="hit">地面チェックの結果としてのRaycastHit2Dオブジェクト</param>
         /// <returns>オブジェクトが地面に接している場合はtrue、それ以外の場合はfalse</returns>
-        public override bool CheckGround2D(Transform obj, out RaycastHit2D hit)
+        public override bool CheckGround2D(Transform player, out RaycastHit2D hit)
         {
-            ContactFilter2D filter = new ContactFilter2D();　　//filterに対して足していくらしい
-            filter.useTriggers = false;  // トリガーを無視
-            filter.SetLayerMask(base.groundLayer);
+            //ContactFilter2D filter = new ContactFilter2D();　　//filterに対して足していくらしい
+            //filter.useTriggers = false;  // トリガーを無視
+            //filter.SetLayerMask(base.groundLayer);
 
-            RaycastHit2D[] results = new RaycastHit2D[1];
+            //RaycastHit2D[] results = new RaycastHit2D[1];
 
-            int hitCount = Physics2D.BoxCast(
-                obj.position,
-                scale,
-                obj.rotation.eulerAngles.z,
-                Vector2.down,
-                filter,
-                results,
-                base.length
-            );
+            //int hitCount = Physics2D.BoxCast(
+            //    player.position,
+            //    scale,
+            //    player.rotation.eulerAngles.z,
+            //    Vector2.down,
+            //    filter,
+            //    results,
+            //    base.length
+            //);
 
-            if (hitCount > 0)
-            {
-                hit = results[0];
-                return true;
-            }
-            else
-            {
-                hit = new RaycastHit2D();
-                return false;
-            }
+            //if (hitCount > 0)
+            //{
+            //    hit = results[0];
+            //    return true;
+            //}
+            //else
+            //{
+            //    hit = new RaycastHit2D();
+            //    return false;
+            //}
 
             #region Trigger無視をしないほう
-            // BoxCast2Dを使用して地面チェックを実行します。
-            //hit = Physics2D.BoxCast(
-            //    obj.position,                                // Objの位置
-            //    scale,                                       // ボックスのサイズ
-            //    obj.rotation.eulerAngles.z,                  // ボックスの回転角度
-            //    Vector2.down,                                // BoxCastの方向（下方向）
-            //    base.length,                                 // BoxCastの最大距離
-            //    base.groundLayer                             // 衝突を検出するレイヤーマスク
-            //);
-            //return hit.collider != null;
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(
+                player.position,                                // Objの位置
+                scale,                                       // ボックスのサイズ
+                player.rotation.eulerAngles.z,                  // ボックスの回転角度
+                Vector2.down,                                // BoxCastの方向（下方向）
+                base.length,                                 // BoxCastの最大距離
+                base.groundLayer                             // 衝突を検出するレイヤーマスク
+            );
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform == player)
+                    continue;
+
+                if (hits[i].collider.isTrigger) //トリガーに当たったらもう一度
+                    continue;
+
+                hit = hits[i]; //outの物に代入して
+                hit.transform.Debuglog();
+                return true;
+            }
             #endregion
 
+            hit = default;
+            return false;
         }
 
         public override void DrawGroundCheckGizmo2D(Transform obj, bool isGrounded)

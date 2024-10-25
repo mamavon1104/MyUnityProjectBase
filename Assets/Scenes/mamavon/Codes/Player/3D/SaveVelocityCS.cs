@@ -1,4 +1,7 @@
 using UnityEngine;
+
+// https://kan-kikuchi.hatenablog.com/entry/Pause_Resume ‚ğQl‚É
+
 namespace Mamavon.Data
 {
     [System.Serializable]

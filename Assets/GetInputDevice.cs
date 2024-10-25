@@ -1,22 +1,13 @@
 #if UNITY_EDITOR
-using Cysharp.Threading.Tasks;
 using Mamavon.Funcs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GetInputDevice : MonoBehaviour
 {
-    private void Start()
-    {
-        foreach (var device in InputSystem.devices)
-        {
-            Debug.Log($"検出されたデバイス: {device.name}, タイプ: {device.GetType()}, パス: {device.path}");
-        }
-    }
     [SerializeField] PlayerInput playerInput;
-    private async void OnEnable()
+    private void OnEnable()
     {
-        await UniTask.WaitUntil(() => playerInput.devices.Count.Debuglog() > 0);
         DebugInputDevice();
     }
     [ContextMenu("デバッグする(InputDeviceを)")]

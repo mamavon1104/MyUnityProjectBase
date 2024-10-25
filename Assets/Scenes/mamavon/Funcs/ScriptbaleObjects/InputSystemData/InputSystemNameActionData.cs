@@ -41,7 +41,7 @@ namespace Mamavon.Data
         {
             var manager = InputWrapperManager.Instance;
 
-            (playerInput.playerIndex, action, triggerOnRelease).Debuglog();
+            (playerInput.playerIndex, action, triggerOnRelease).Debuglog(TextColor.BlueViolet);
 
             switch (myValueType)
             {
@@ -79,14 +79,14 @@ namespace Mamavon.Data
                     break;
             }
         }
-        public IObservable<T> GetObservable<T>(int playerNum, int timeSpan = 10)
+        public IObservable<T> GetObservable<T>(int playerIndex, int timeSpan = 10)
         {
             var manager = InputWrapperManager.Instance;
 
             if (typeof(T) != (Type)dic[myValueType])
                 $"指定したValueType{myValueType}と型{typeof(T)}が違います".DebuglogError();
 
-            return manager.GetObservable<T>(playerNum, actionReference.name).ThrottleFirst(TimeSpan.FromMilliseconds(timeSpan));
+            return manager.GetObservable<T>(playerIndex, actionReference.name).ThrottleFirst(TimeSpan.FromMilliseconds(timeSpan));
         }
     }
 #if UNITY_EDITOR
