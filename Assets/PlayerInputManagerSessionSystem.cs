@@ -7,32 +7,46 @@ namespace Mamavon.Useful
 {
     [RequireComponent(typeof(PlayerInputManager))]
     //checked
-    public class PlayerInputManagerSessionCS : MonoBehaviour
+    public class PlayerInputManagerSessionSystem : MonoBehaviour
     {
         [SerializeField] PlayerInputManager inputManager;
         //[Header("参加時に入力するキーとかボタンとか"), SerializeField] InputActionReference _joinKeyAction;
 
         [Header("参加時のイベント"), SerializeField] UnityEvent m_joinEvent;
         [Header("退出時のイベント"), SerializeField] UnityEvent m_leftEvent;
+        [Header("コントローラー接続時のイベント"), SerializeField] UnityEvent m_deviceChangedEvent;
+
+        /// <summary>
+        /// プレイヤーが参加した時に発火されるAction<br/>
+        /// <br/>
+        /// 引数 : PlayerInput
+        /// </summary>
         public Action<PlayerInput> joinAction { get; set; }
+
+        /// <summary>
+        /// プレイヤーが退出した時に発火されるAction<br/>
+        /// <br/>
+        /// 引数 : PlayerInput
+        /// </summary>
         public Action<PlayerInput> leftAction { get; set; }
+
+        /// <summary>
+        /// コントローラーが接続、切断された時に発火されるAction<br/>
+        /// <br/>
+        /// 引数 : InputDevice, InputDeviceChange
+        /// </summary>
+        public Action<InputDevice, InputDeviceChange> deviceChangedAction { get; set; }
 
         private void Awake()
         {
-            //if (_joinKeyAction == null)
-            //    "InputActionReferenceがnullになっています。".DebuglogError();
-
             if (inputManager == null) inputManager = GetComponent<PlayerInputManager>();
         }
 
         private void OnEnable()
         {
-            //_joinKeyAction.action.Debuglog();
-            //_joinKeyAction.action.performed += JoinActionPerformed;
-            //_joinKeyAction.action.Enable();
-
             inputManager.onPlayerJoined += InvokeJoinEvent;
             inputManager.onPlayerLeft += InvokeLeftAction;
+            InputSystem.onDeviceChange += InvokeDeviceAction;
         }
 
         /// <summary>
@@ -52,25 +66,17 @@ namespace Mamavon.Useful
         {
             leftAction?.Invoke(input);
             m_leftEvent?.Invoke();
-
-            //foreach (InputDevice device in input.devices)
-            //{
-            //    if (!nowInputDevices.Contains(device))
-            //        continue;
-
-            //    input.Debuglog($"プレイヤー{input.playerIndex} が退出しました、デバイス : {device}");
-            //    nowInputDevices.Remove(device);
-            //}
         }
+        /// <summary>
+        /// コントローラーが接続されたときに発火するイベント <br/>
+        /// コード上で設定されたイベントとUnityEvent、どちらとも発火する
+        /// </summary>
+        private void InvokeDeviceAction(InputDevice device, InputDeviceChange change)
+        {
+            //change.Debuglog($"デバイスが変更されました{device} デバイスは{DeviceExtensions.GetDevicesState(change)}詳細だと{change}", TextColor.Orangered);
 
-        //private void DebugList()
-        //{
-        //    string a = "";
-        //    foreach (var item in nowInputDevices)
-        //    {
-        //        a += item.ToString();
-        //    }
-        //    a.Debuglog(TextColor.DarkRed);
-        //}
+            deviceChangedAction?.Invoke(device, change);
+            m_deviceChangedEvent?.Invoke();
+        }
     }
 }

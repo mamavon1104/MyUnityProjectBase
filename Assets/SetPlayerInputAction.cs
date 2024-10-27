@@ -1,54 +1,73 @@
-using Cysharp.Threading.Tasks;
-using Mamavon.Code;
 using Mamavon.Funcs;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 namespace Mamavon.Useful
 {
     public class SetPlayerInputAction : MonoBehaviour
     {
-        [SerializeField] PlayerInputManagerSessionCS m_playerInpManager;
-        [SerializeField] List<SetInputAction> _playerInputActions = new List<SetInputAction>();
+        [Serializable]
+        private class PlayerInputData
+        {
+            [SerializeField] public PlayerInput playerInput;
+            [SerializeField] public ReadOnlyArray<InputDevice> devices;
+        }
 
-        [ContextMenu("Action設定しなおし")]
+        [SerializeField] private PlayerInputManagerSessionSystem m_playerInputManager;
+        [SerializeField] private List<PlayerInputData> playerInputDataList = new List<PlayerInputData>();
 
         private void Awake()
         {
-            m_playerInpManager.joinAction += AddPlayerInpAct;
-            m_playerInpManager.leftAction += RemovePlayerInpAct;
-        }
-        private void ResetPlayersInpAct(PlayerInput inp)
-        {
-            //foreach (var player in _playerInputActions)
-            //{
-            //    player.Debuglog($"{player.GetComponent<PlayerInput>().user.index}", TextColor.Blue).EnabledActions();
-            //}
+            m_playerInputManager.joinAction += AddPlayerInputAction;
+            m_playerInputManager.leftAction += RemovePlayerInputAction;
+            m_playerInputManager.deviceChangedAction += ReconnectDeviceAction;
         }
 
-        private void AddPlayerInpAct(PlayerInput inp)
+        private void AddPlayerInputAction(PlayerInput playerInput)
         {
-            inp.TryGetComponent<SetInputAction>(out var inpAct);
+            Debug.Log("追加!");
+            if (playerInputDataList.Exists(data => data.playerInput == playerInput))
+                return;
 
-            //if (_playerInputActions.Contains(inpAct))
-            //    "なんかlistに登録されているSetInputActionCSまた入室したんだけど".DebuglogWarning(inpAct.ToString());
-
-            _playerInputActions.Add(inpAct);
+            PlayerInputData newData = new PlayerInputData
+            {
+                playerInput = playerInput,
+                devices = playerInput.devices
+            };
+            playerInputDataList.Add(newData);
+            playerInput.Debuglog("プレイヤーが参加", TextColor.Cyan);
         }
-        private async void RemovePlayerInpAct(PlayerInput inp)
+
+        private void RemovePlayerInputAction(PlayerInput playerInput)
         {
-            inp.TryGetComponent<SetInputAction>(out var inpAct);
+            int index = playerInputDataList.FindIndex(data => data.playerInput == playerInput);
+            if (index != -1)
+            {
+                playerInputDataList.RemoveAt(index);
+                playerInput.Debuglog("プレイヤーが退出", TextColor.Cyan);
+            }
+        }
 
-            if (!_playerInputActions.Contains(inpAct))
-                "なんかlistに登録されていないSetInputActionCS退出したんだけど".DebuglogWarning();
+        private void ReconnectDeviceAction(InputDevice device, InputDeviceChange deviceChange)
+        {
+            if (deviceChange != InputDeviceChange.Reconnected)
+                return;
 
-            _playerInputActions.Remove(inpAct);
+            var playerInputData = FindPlayerInputDataForDevice(device);
+            if (playerInputData != null)
+            {
+                playerInputData.playerInput.SwitchCurrentControlScheme(device);
+                Debug.Log($"リコネクト {device} to Player {playerInputData.playerInput}");
+            }
+        }
 
-            await UniTask.WaitUntil(() => inp.playerIndex.Debuglog() == -1); //完全に削除されるまで待つ
-
-            ResetPlayersInpAct(inp);
+        private PlayerInputData FindPlayerInputDataForDevice(InputDevice device)
+        {
+            return playerInputDataList.Find(data => data.devices.Contains(device));
         }
     }
-
 }
