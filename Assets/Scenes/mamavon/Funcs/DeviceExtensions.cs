@@ -2,6 +2,8 @@ using System;
 using UnityEngine.InputSystem;
 namespace Mamavon.Funcs
 {
+    //ちょっとこのコード美しいかも、<br/>学んだのもデカい
+
     public static class DeviceExtensions
     {
         public enum DeviceState
@@ -11,16 +13,16 @@ namespace Mamavon.Funcs
             Both,
         }
         /// <summary>
-        /// InputDeviceChangeに対して、<br>
-        /// --そのコントローラーが接続した<br>
-        /// --そのコントローラーが切断した<br>
-        /// --そのコントローラーが接続と接続どちらもした<br>
+        /// InputDeviceChangeに対して、<br/>
+        /// --そのコントローラーが接続した<br/>
+        /// --そのコントローラーが切断した<br/>
+        /// --そのコントローラーが接続と接続どちらもした<br/>
         /// それを返します
         /// </summary>
         /// <returns>
-        /// Connect: 接続
-        /// Disconnect: 切断
-        /// Both: 両方
+        /// Connect: 接続    <br/>
+        /// Disconnect: 切断 <br/>
+        /// Both: 両方       <br/>
         /// </returns>
         public static DeviceState GetDevicesState(InputDeviceChange change)
         {
@@ -29,7 +31,7 @@ namespace Mamavon.Funcs
                 InputDeviceChange.Added or                              // Added: 新しいデバイスが追加された
                 InputDeviceChange.Reconnected or                        // Reconnected: デバイスが再接続された
                 InputDeviceChange.Enabled or                            // Enabled: デバイスが有効化された
-                InputDeviceChange.SoftReset => DeviceState.Connect,   // SoftReset: デバイスがソフトリセットされた(バックグラウンドからの復帰とか)
+                InputDeviceChange.SoftReset => DeviceState.Connect,     // SoftReset: デバイスがソフトリセットされた(バックグラウンドからの復帰とか)
 
                 InputDeviceChange.Removed or                            // Removed: デバイスが削除された
                 InputDeviceChange.Disconnected or                       // Disconnected: デバイスが切断された

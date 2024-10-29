@@ -41,7 +41,7 @@ namespace Mamavon.Data
         {
             var manager = InputWrapperManager.Instance;
 
-            (playerInput.playerIndex, action, triggerOnRelease).Debuglog(TextColor.BlueViolet);
+            //(playerInput.playerIndex, action, triggerOnRelease).Debuglog(TextColor.BlueViolet);
 
             switch (myValueType)
             {

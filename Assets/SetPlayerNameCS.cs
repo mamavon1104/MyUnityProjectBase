@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class SetPlayerNameCS : MonoBehaviour
 {
-    [SerializeField] PlayerInputManagerSessionCS manager;
+    [SerializeField] PlayerInputManagerSessionSystem manager;
     private void OnEnable()
     {
         manager.joinAction += SetPlayerName;

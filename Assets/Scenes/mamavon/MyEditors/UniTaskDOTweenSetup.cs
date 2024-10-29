@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using Mamavon.Funcs;
 using UnityEditor;
 
@@ -30,3 +31,4 @@ namespace Mamavon.Editor
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using Mamavon.Funcs;
+﻿#if UNITY_EDITOR
+using Mamavon.Funcs;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -99,3 +100,4 @@ namespace Mamavon.MyEditor
         }
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -18,18 +19,23 @@ namespace Mamavon.MyEditor
 
         private void OnEnable()
         {
+            LoadSceneData();
+        }
+
+        private void LoadSceneData()
+        {
             var scenes = EditorBuildSettings.scenes
                 .Where(s => s.enabled)
                 .ToArray();
 
             if (scenes.Length == 0)
             {
+                sceneNames = new string[0];
+                scenePaths = new string[0];
                 return;
             }
 
             scenePaths = scenes.Select(s => s.path).ToArray();
-
-            //これでファイルの名前が取得できるとの事。
             sceneNames = scenes.Select(s => System.IO.Path.GetFileNameWithoutExtension(s.path)).ToArray();
         }
 
@@ -44,17 +50,26 @@ namespace Mamavon.MyEditor
                     LoadScene(i);
                 }
             }
+
+            GUILayout.Space(10);
+            if (GUILayout.Button("このエディターをリセット"))
+            {
+                ResetEditor();
+            }
+        }
+
+        private void ResetEditor()
+        {
+            LoadSceneData();
+            Repaint();
         }
 
         private static void LoadScene(int sceneIndex)
         {
             string scenePath = scenePaths[sceneIndex];
 
-            //ファイルからパスで指定してあげて読み込むとシーンが呼び出せる。
             if (System.IO.File.Exists(scenePath))
             {
-                // isDirtyでシーンが変わっているかどうかを判別できる。
-                // 頑張って作ったものをDirty呼ばわりするなよ、聞いていますか？
                 if (EditorSceneManager.GetActiveScene().isDirty)
                 {
                     if (EditorUtility.DisplayDialog("保存しますか",
@@ -65,7 +80,6 @@ namespace Mamavon.MyEditor
                     }
                 }
 
-                // Load the new sceneObj
                 EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             }
             else
@@ -74,5 +88,5 @@ namespace Mamavon.MyEditor
             }
         }
     }
-
 }
+#endif

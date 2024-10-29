@@ -1,5 +1,4 @@
 using Mamavon.Data;
-using Mamavon.Funcs;
 using Mamavon.Useful;
 using System;
 using System.Collections.Generic;
@@ -80,7 +79,7 @@ public class InputWrapperManager : SingletonMonoBehaviour<InputWrapperManager>
         {
             subject = new Subject<T>();
             subjects[actionName] = subject;
-            (playerNumber, actionName, subject).Debuglog(TextColor.GreenYellow);
+            //(playerNumber, actionName, subject).Debuglog(TextColor.GreenYellow);
         }
 
         return (subject as Subject<T>).AsObservable();

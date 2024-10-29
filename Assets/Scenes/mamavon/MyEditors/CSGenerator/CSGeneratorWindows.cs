@@ -81,7 +81,7 @@ namespace {0}
 
     public class MultiTabScriptGeneratorWindow : EditorWindow
     {
-        private string[] classNames = new string[] { "ScriptableObject_CS", "UnityWindow_CS", "AnyExtensions_CS" };
+        private string[] classNames = new string[] { "ScriptableObject", "UnityWindow_CS", "AnyExtensions" };
         private string[] tabNames = { "ScriptableObject", "UnityWindow", "AnyExtensions" };
 
         private StringsContainerBase[] containerBases = new StringsContainerBase[]{

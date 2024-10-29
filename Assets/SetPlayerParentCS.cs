@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class SetPlayerParentCS : MonoBehaviour
 {
-    [SerializeField] PlayerInputManagerSessionCS manager;
+    [SerializeField] PlayerInputManagerSessionSystem manager;
     [SerializeField] private Transform parentObj;
     private void OnEnable()
     {

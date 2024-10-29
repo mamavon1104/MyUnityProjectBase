@@ -1,6 +1,4 @@
-
 #if UNITY_EDITOR
-using Mamavon.Funcs;
 using UnityEditor;
 using UnityEngine;
 

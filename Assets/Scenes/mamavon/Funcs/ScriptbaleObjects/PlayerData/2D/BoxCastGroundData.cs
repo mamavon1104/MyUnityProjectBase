@@ -1,4 +1,3 @@
-using Mamavon.Funcs;
 using UnityEngine;
 
 namespace Mamavon.Data
@@ -25,36 +24,8 @@ namespace Mamavon.Data
         /// <returns>オブジェクトが地面に接している場合はtrue、それ以外の場合はfalse</returns>
         public override bool CheckGround2D(Transform player, out RaycastHit2D hit)
         {
-            //ContactFilter2D filter = new ContactFilter2D();　　//filterに対して足していくらしい
-            //filter.useTriggers = false;  // トリガーを無視
-            //filter.SetLayerMask(base.groundLayer);
-
-            //RaycastHit2D[] results = new RaycastHit2D[1];
-
-            //int hitCount = Physics2D.BoxCast(
-            //    player.position,
-            //    scale,
-            //    player.rotation.eulerAngles.z,
-            //    Vector2.down,
-            //    filter,
-            //    results,
-            //    base.length
-            //);
-
-            //if (hitCount > 0)
-            //{
-            //    hit = results[0];
-            //    return true;
-            //}
-            //else
-            //{
-            //    hit = new RaycastHit2D();
-            //    return false;
-            //}
-
-            #region Trigger無視をしないほう
             RaycastHit2D[] hits = Physics2D.BoxCastAll(
-                player.position,                                // Objの位置
+                player.position,                             // Objの位置
                 scale,                                       // ボックスのサイズ
                 player.rotation.eulerAngles.z,                  // ボックスの回転角度
                 Vector2.down,                                // BoxCastの方向（下方向）
@@ -67,14 +38,15 @@ namespace Mamavon.Data
                 if (hits[i].transform == player)
                     continue;
 
-                if (hits[i].collider.isTrigger) //トリガーに当たったらもう一度
+                if (hits[i].collider.isTrigger) //トリガーだったらもう一度
                     continue;
 
                 hit = hits[i]; //outの物に代入して
-                hit.transform.Debuglog();
+
+                //hit.transform.Debuglog();
+
                 return true;
             }
-            #endregion
 
             hit = default;
             return false;

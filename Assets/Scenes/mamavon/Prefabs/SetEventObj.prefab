@@ -48,12 +48,15 @@ MonoBehaviour:
   - command: a
     sceneObj:
       m_SceneName: New Scene
-  - command: c
+  - command: b
     sceneObj:
       m_SceneName: Stage2d
-  - command: l
+  - command: c
     sceneObj:
-      m_SceneName: Stage3D
-  - command: t
+      m_SceneName: TextUI
+  - command: d
     sceneObj:
       m_SceneName: nowScene
+  - command: e
+    sceneObj:
+      m_SceneName: New Scene

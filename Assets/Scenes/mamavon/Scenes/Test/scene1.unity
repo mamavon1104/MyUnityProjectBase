@@ -129,51 +129,7 @@ PrefabInstance:
   m_Modification:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -342.5836
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 940.98413
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 595527534755356206, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8078918767298759498, guid: 4ba93aa894aec4642b309d098c7a6e5e, type: 3}
-      propertyPath: m_Name
-      value: SceneSettings
-      objectReference: {fileID: 0}
+    m_Modifications: []
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
