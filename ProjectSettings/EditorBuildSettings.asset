@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Scenes/Test/scene1 1.unity
     guid: ff24f7dcb0adc364caf263c5fefdd6ae
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Stages/Stage3D.unity
+    path: Packages/com.mamavon.myunityprojectbase/Scenes/Scenes/Stage.unity
     guid: ada4eabf100c2774b9a7092ad42d125d
   - enabled: 1
     path: Assets/Scenes/mamavon/Scenes/Stages/Stage2d.unity
@@ -25,3 +25,5 @@ EditorBuildSettings:
     guid: f393d2206cb851840ac65af01c8c6ea9
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f5f1f9cb8bd806e49b8085c8e6ca341e, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3991ef1c0f1f67942857cc02efd8d713, type: 3}
+  m_UseUCBPForAssetBundles: 0
