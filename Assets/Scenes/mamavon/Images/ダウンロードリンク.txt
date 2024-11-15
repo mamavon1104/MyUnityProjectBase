@@ -1,5 +1,0 @@
-InputSystem用ScriptableObject 画像
-https://owl-stock.work/icon-mono-00111/#google_vignette
-
-インプットキーやキーボードなどのアイコン画像
-https://kenney.nl/assets/input-prompts

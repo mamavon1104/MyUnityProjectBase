@@ -1,0 +1,26 @@
+
+ネームスペースの命名を忘れないうちやっておきます。
+
+「namespace Mamavon.～～～」
+ という名前が付いている奴は自分が書いたUnityを便利に使う為の関数、拡張機能、コードです。
+
+「namespace Mamavon.Func」
+ Monobehavoiurが付いていない関数の塊クラスが管理されています(Extensions系統か)。変数などはほぼなく
+ ・public static void ～～～()
+ ・public static void ～～～(this T _)
+ の様に拡張メソッドも管理されています。
+
+「namespace Mamavon.Useful」
+ Monobehavoiurが付いているManager系に分類されるであろうクラスが管理されています。
+
+「namespace Mamavon.Code」
+ 普通のコード！いろんなゲームに使えるコードです！
+
+「namespace Mamavon.Data」
+ ScriptableObject,Monobehaviour等のクラスについてます。Playerのデータとか色々なデータを保存しています。
+
+「namespace Mamavon.MyEditor」
+ EditorWindow拡張のクラスについています。大体はMamavon / ～～ という形でwindowを開けます。
+
+
+ これは絶対ではない！！いつか消すかも！それまでこれでやるわ！よろしくな！

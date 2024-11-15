@@ -6,22 +6,22 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Test/nowScene.unity
+    path: Assets/mamavon/Scenes/Test/nowScene.unity
     guid: 73b40bf68565da24c973cac5d4edc6fe
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Test/scene1.unity
+    path: Assets/mamavon/Scenes/Test/scene1.unity
     guid: f79678320b999a7489d4eb77e286649e
   - enabled: 0
     path: Assets/Scenes/Scenes/Test/scene1 1.unity
     guid: ff24f7dcb0adc364caf263c5fefdd6ae
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Stages/Stage2d.unity
+    path: Assets/mamavon/Scenes/Stages/Stage2d.unity
     guid: 7926e0e290e79d5418be4b495fd069c0
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Stages/New Scene.unity
+    path: Assets/mamavon/Scenes/Stages/New Scene.unity
     guid: f393d2206cb851840ac65af01c8c6ea9
   - enabled: 1
-    path: Assets/Scenes/mamavon/Scenes/Test/TextUI.unity
+    path: Assets/mamavon/Scenes/Test/TextUI.unity
     guid: 2deec24e7b73390499da7a14b7b12c5e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f5f1f9cb8bd806e49b8085c8e6ca341e, type: 2}
