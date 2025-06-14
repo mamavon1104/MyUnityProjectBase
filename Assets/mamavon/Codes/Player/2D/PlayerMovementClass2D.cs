@@ -18,7 +18,9 @@ public class PlayerMovementClass2D : MonoBehaviour
         _rig = GetComponent<Rigidbody2D>();
         var playerIndex = GetComponent<PlayerInput>().playerIndex;
 
-        m_move.GetObservable<Vector2>(playerIndex.Debuglog()).Subscribe(v =>
+        // Debug.logを後付けしながらテキストカラーも設定できる拡張
+        // InputSystemをUniRx形式で待つ拡張機能 (hoge.GetObservable<型>(playerIndex))
+        m_move.GetObservable<Vector2>(playerIndex.Debuglog(TextColor.Green)).Subscribe(v =>
         {
             _moveVec = v; //UniRX * PlayerInput
         }).AddTo(this);

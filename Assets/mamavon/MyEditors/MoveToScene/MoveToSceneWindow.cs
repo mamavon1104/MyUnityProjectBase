@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using Mamavon.Funcs;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -81,6 +82,7 @@ namespace Mamavon.MyEditor
                 }
 
                 EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+                $"{scenePath}".Debuglog("以下のパスにあるシーンをロードしました", TextColor.Cyan);
             }
             else
             {
